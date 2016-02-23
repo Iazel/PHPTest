@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'page_title.create_product'|trans}}{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1 class="page-title text-center">{{ 'page_title.create_product'|trans }}</h1>
+  {{ form_start(form) }}
+  <div class="form-group">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.name) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.desc) }}
+    {{ form_widget(form.desc, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.desc) }}
+  </div>
+
+  <div class="form-actions push-right">
+    {{ form_row(form.save, {attr: {class: 'btn btn-primary'}}) }}
+  </div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}
