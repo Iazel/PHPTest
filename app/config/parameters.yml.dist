@@ -15,5 +15,7 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    product_image_destination: "%kernel.root_dir%/../web/images/p"
+
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

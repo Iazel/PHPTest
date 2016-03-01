@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
-{% block title %}{{ 'page_title.create_product'|trans}}{% endblock %}
+{% block title %}{{ 'page_title.create_product'|trans }}{% endblock %}
 
 {% block body %}
 <div class="container">
   <h1 class="page-title text-center">{{ 'page_title.create_product'|trans }}</h1>
+  {{ form(form) }}
+{#
   {{ form_start(form) }}
   <div class="form-group">
     {{ form_label(form.name) }}
@@ -21,5 +24,6 @@
     {{ form_row(form.save, {attr: {class: 'btn btn-primary'}}) }}
   </div>
   {{ form_end(form) }}
+#}
 </div>
 {% endblock %}

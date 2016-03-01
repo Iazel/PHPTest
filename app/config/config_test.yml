@@ -1,6 +1,13 @@
 imports:
     - { resource: config_dev.yml }
 
+parameters:
+    product_image_destination: /tmp/prontopro
+
+doctrine:
+    dbal:
+        path: '%kernel.root_dir%/../tests/data.db3'
+
 framework:
     test: ~
     session:

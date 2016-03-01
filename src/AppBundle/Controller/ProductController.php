@@ -20,11 +20,14 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if( $form->isValid() ) {
-            $product->setCreatedNow();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
-            $em->flush();
-            return $this->redirectToRoute('product_list');
+            try {
+                $this->get('product_persister')->persist($product, $form);
+                $this->addFlash('success', $this->t('products.created_successfully'));
+                return $this->redirectToRoute('product_list');
+            }
+            catch(Exception $ex) {
+                $this->addFlash('error', $this->t('products.error'));
+            }
         }
 
         return $this->get('vm.create_product')->render($form);
@@ -35,5 +38,10 @@ class ProductController extends Controller
      */
     public function listAction()
     {
+    }
+
+    private function t($str)
+    {
+        return $this->get('translator')->trans($str);
     }
 }

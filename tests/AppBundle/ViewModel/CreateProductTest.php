@@ -1,10 +1,9 @@
 <?php
-namespace Tests\AppBundle\ViewModel;
+namespace AppBundle\ViewModel;
 
-use AppBundle\ViewModel\CreateProduct;
-use AppBundle\TestHelper\ServiceTestCase;
-use AppBundle\FormType\ProductType;
 use AppBundle\Entity\Product;
+use AppBundle\FormType\ProductType;
+use AppBundle\TestHelper\ServiceTestCase;
 
 class CreateProductTest extends ServiceTestCase
 {

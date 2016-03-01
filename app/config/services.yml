@@ -4,6 +4,10 @@ parameters:
 #    parameter_name: value
 
 services:
+    product_persister:
+        class: AppBundle\Service\ProductPersister
+        arguments: ['@doctrine']
+
     vm.create_product:
         class: AppBundle\ViewModel\CreateProduct
         arguments: ['@templating']
