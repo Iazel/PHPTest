@@ -4,13 +4,17 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Fogs\TaggingBundle\Interfaces\Taggable;
+use Fogs\TaggingBundle\Traits\TaggableTrait;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\Table(name="products")
  * @Vich\Uploadable
  */
-class Product {
+class Product implements Taggable {
+    use TaggableTrait;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

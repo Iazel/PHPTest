@@ -27,6 +27,7 @@ class ProductControllerTest extends WebTestCase
         $this->assertSame(200, $client->getResponse()->getStatusCode());
         $form = $crawler->selectButton('product[save]')->form(array(
             'product[name]' => 'Test',
+            'product[tags]' => 'a,b,c',
         ));
         $crawler = $client->submit($form);
         $this->assertTrue(
@@ -83,7 +84,8 @@ class ProductControllerTest extends WebTestCase
     private function getValidCreateForm($client)
     {
         return $this->getCreateForm($client, array(
-            'product[name]' => 'Test'
+            'product[name]' => 'Test',
+            'product[tags]' => 'a,b,c',
         ));
     }
 

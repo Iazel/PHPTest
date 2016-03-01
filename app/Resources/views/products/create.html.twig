@@ -27,3 +27,11 @@
 #}
 </div>
 {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/tagging.css') }}" />
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('assets/js/jquery-1.12.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/tagging-bundle.js') }}"></script>
+{% endblock %}

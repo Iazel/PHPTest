@@ -15,7 +15,10 @@
       <parameter key="SwiftmailerBundle">Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle</parameter>
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
+      <parameter key="AsseticBundle">Symfony\Bundle\AsseticBundle\AsseticBundle</parameter>
       <parameter key="VichUploaderBundle">Vich\UploaderBundle\VichUploaderBundle</parameter>
+      <parameter key="FPNTagBundle">FPN\TagBundle\FPNTagBundle</parameter>
+      <parameter key="FogsTaggingBundle">Fogs\TaggingBundle\FogsTaggingBundle</parameter>
       <parameter key="AppBundle">AppBundle\AppBundle</parameter>
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
@@ -33,6 +36,7 @@
     <parameter key="mailer_user">null</parameter>
     <parameter key="mailer_password">null</parameter>
     <parameter key="secret">e6942b2b1750a5704d4ae00963f275aadca6a96a</parameter>
+    <parameter key="product_image_destination">/home/iazel/workspace/php/prontopro/PHPTest/app/../web/images/p</parameter>
     <parameter key="locale">en</parameter>
     <parameter key="fragment.renderer.hinclude.global_template">null</parameter>
     <parameter key="fragment.path">/_fragment</parameter>
@@ -89,6 +93,7 @@
     <parameter key="twig.form.resources" type="collection">
       <parameter>form_div_layout.html.twig</parameter>
       <parameter>VichUploaderBundle:Form:fields.html.twig</parameter>
+      <parameter>FogsTaggingBundle:Form:widgets.html.twig</parameter>
     </parameter>
     <parameter key="monolog.logger.class">Symfony\Bridge\Monolog\Logger</parameter>
     <parameter key="monolog.gelf.publisher.class">Gelf\MessagePublisher</parameter>
@@ -301,6 +306,57 @@
     <parameter key="sensio_framework_extra.converter.doctrine.class">Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter</parameter>
     <parameter key="sensio_framework_extra.converter.datetime.class">Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DateTimeParamConverter</parameter>
     <parameter key="sensio_framework_extra.view.listener.class">Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener</parameter>
+    <parameter key="assetic.asset_factory.class">Symfony\Bundle\AsseticBundle\Factory\AssetFactory</parameter>
+    <parameter key="assetic.asset_manager.class">Assetic\Factory\LazyAssetManager</parameter>
+    <parameter key="assetic.asset_manager_cache_warmer.class">Symfony\Bundle\AsseticBundle\CacheWarmer\AssetManagerCacheWarmer</parameter>
+    <parameter key="assetic.cached_formula_loader.class">Assetic\Factory\Loader\CachedFormulaLoader</parameter>
+    <parameter key="assetic.config_cache.class">Assetic\Cache\ConfigCache</parameter>
+    <parameter key="assetic.config_loader.class">Symfony\Bundle\AsseticBundle\Factory\Loader\ConfigurationLoader</parameter>
+    <parameter key="assetic.config_resource.class">Symfony\Bundle\AsseticBundle\Factory\Resource\ConfigurationResource</parameter>
+    <parameter key="assetic.coalescing_directory_resource.class">Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource</parameter>
+    <parameter key="assetic.directory_resource.class">Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource</parameter>
+    <parameter key="assetic.filter_manager.class">Symfony\Bundle\AsseticBundle\FilterManager</parameter>
+    <parameter key="assetic.worker.ensure_filter.class">Assetic\Factory\Worker\EnsureFilterWorker</parameter>
+    <parameter key="assetic.worker.cache_busting.class">Assetic\Factory\Worker\CacheBustingWorker</parameter>
+    <parameter key="assetic.value_supplier.class">Symfony\Bundle\AsseticBundle\DefaultValueSupplier</parameter>
+    <parameter key="assetic.node.paths" type="collection"/>
+    <parameter key="assetic.cache_dir">/home/iazel/workspace/php/prontopro/PHPTest/var/cache/dev/assetic</parameter>
+    <parameter key="assetic.bundles" type="collection">
+      <parameter>FrameworkBundle</parameter>
+      <parameter>SecurityBundle</parameter>
+      <parameter>TwigBundle</parameter>
+      <parameter>MonologBundle</parameter>
+      <parameter>SwiftmailerBundle</parameter>
+      <parameter>DoctrineBundle</parameter>
+      <parameter>SensioFrameworkExtraBundle</parameter>
+      <parameter>AsseticBundle</parameter>
+      <parameter>VichUploaderBundle</parameter>
+      <parameter>FPNTagBundle</parameter>
+      <parameter>FogsTaggingBundle</parameter>
+      <parameter>AppBundle</parameter>
+      <parameter>DebugBundle</parameter>
+      <parameter>WebProfilerBundle</parameter>
+      <parameter>SensioDistributionBundle</parameter>
+      <parameter>SensioGeneratorBundle</parameter>
+    </parameter>
+    <parameter key="assetic.twig_extension.class">Symfony\Bundle\AsseticBundle\Twig\AsseticExtension</parameter>
+    <parameter key="assetic.twig_formula_loader.class">Assetic\Extension\Twig\TwigFormulaLoader</parameter>
+    <parameter key="assetic.helper.dynamic.class">Symfony\Bundle\AsseticBundle\Templating\DynamicAsseticHelper</parameter>
+    <parameter key="assetic.helper.static.class">Symfony\Bundle\AsseticBundle\Templating\StaticAsseticHelper</parameter>
+    <parameter key="assetic.php_formula_loader.class">Symfony\Bundle\AsseticBundle\Factory\Loader\AsseticHelperFormulaLoader</parameter>
+    <parameter key="assetic.debug">true</parameter>
+    <parameter key="assetic.use_controller">false</parameter>
+    <parameter key="assetic.enable_profiler">false</parameter>
+    <parameter key="assetic.read_from">/home/iazel/workspace/php/prontopro/PHPTest/app/../web</parameter>
+    <parameter key="assetic.write_to">/home/iazel/workspace/php/prontopro/PHPTest/app/../web</parameter>
+    <parameter key="assetic.variables" type="collection"/>
+    <parameter key="assetic.java.bin">/usr/bin/java</parameter>
+    <parameter key="assetic.node.bin">/usr/local/bin/node</parameter>
+    <parameter key="assetic.ruby.bin">/usr/local/bin/ruby</parameter>
+    <parameter key="assetic.sass.bin">/usr/local/bin/sass</parameter>
+    <parameter key="assetic.reactjsx.bin">/usr/bin/jsx</parameter>
+    <parameter key="assetic.filter.cssrewrite.class">Assetic\Filter\CssRewriteFilter</parameter>
+    <parameter key="assetic.twig_extension.functions" type="collection"/>
     <parameter key="vich_uploader.default_filename_attribute_suffix">_name</parameter>
     <parameter key="vich_uploader.mappings" type="collection">
       <parameter key="product_image" type="collection">
@@ -318,6 +374,10 @@
       </parameter>
     </parameter>
     <parameter key="vich_uploader.file_injector.class">Vich\UploaderBundle\Injector\FileInjector</parameter>
+    <parameter key="fpn_tag.tag_manager.class">Fogs\TaggingBundle\Service\TagManager</parameter>
+    <parameter key="fpn_tag.entity.tag.class">Fogs\TaggingBundle\Entity\Tag</parameter>
+    <parameter key="fpn_tag.entity.tagging.class">Fogs\TaggingBundle\Entity\Tagging</parameter>
+    <parameter key="fpn_tag.slugifier.class">FPN\TagBundle\Util\Slugifier</parameter>
     <parameter key="web_profiler.debug_toolbar.position">bottom</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
@@ -388,11 +448,15 @@
     </parameter>
   </parameters>
   <services>
-    <service id="product_persister" class="AppBundle\Etc\ProductPersister">
+    <service id="product_persister" class="AppBundle\Service\ProductPersister">
       <argument type="service" id="doctrine"/>
     </service>
     <service id="vm.create_product" class="AppBundle\ViewModel\CreateProduct">
       <argument type="service" id="templating"/>
+    </service>
+    <service id="app.form.type.tags" class="AppBundle\Form\Type\TagsType">
+      <tag name="form.type"/>
+      <argument type="service" id="fpn_tag.tag_manager"/>
     </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
@@ -435,6 +499,12 @@
               </service>
             </argument>
             <argument type="service" id="templating.locator"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\CacheWarmer\AssetManagerCacheWarmer" public="false">
+            <tag name="kernel.cache_warmer" priority="10"/>
+            <argument type="service" id="service_container"/>
           </service>
         </argument>
         <argument type="service" id="kernel.class_cache.cache_warmer"/>
@@ -842,6 +912,7 @@
           <service class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension" public="false">
             <argument type="service" id="service_container"/>
             <argument type="collection">
+              <argument key="AppBundle\Form\Type\TagsType">app.form.type.tags</argument>
               <argument key="Symfony\Component\Form\Extension\Core\Type\FormType">form.type.form</argument>
               <argument key="Symfony\Component\Form\Extension\Core\Type\BirthdayType">form.type.birthday</argument>
               <argument key="Symfony\Component\Form\Extension\Core\Type\CheckboxType">form.type.checkbox</argument>
@@ -876,6 +947,7 @@
               <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType">form.type.entity</argument>
               <argument key="Vich\UploaderBundle\Form\Type\VichFileType">vich_uploader.form.type.file</argument>
               <argument key="Vich\UploaderBundle\Form\Type\VichImageType">vich_uploader.form.type.image</argument>
+              <argument key="Fogs\TaggingBundle\Form\TagsType">fogs_tag.form.tags</argument>
             </argument>
             <argument type="collection">
               <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="collection">
@@ -1516,7 +1588,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>56d3787c1fac54.10163149</argument>
+            <argument>56d5337f1c55d2.06618080</argument>
           </service>
         </argument>
       </argument>
@@ -1645,7 +1717,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>56d3787c1fac54.10163149</argument>
+            <argument>56d5337f1c55d2.06618080</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -1816,6 +1888,7 @@
                     <argument type="collection">
                       <argument>form_div_layout.html.twig</argument>
                       <argument>VichUploaderBundle:Form:fields.html.twig</argument>
+                      <argument>FogsTaggingBundle:Form:widgets.html.twig</argument>
                     </argument>
                   </service>
                 </argument>
@@ -1836,6 +1909,41 @@
         <argument type="service">
           <service class="Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension" public="false">
             <tag name="twig.extension"/>
+          </service>
+        </argument>
+      </call>
+      <call method="addExtension">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Twig\AsseticExtension" public="false">
+            <tag name="twig.extension"/>
+            <tag name="assetic.templating.twig"/>
+            <argument type="service" id="assetic.asset_factory"/>
+            <argument type="service" id="templating.name_parser"/>
+            <argument>false</argument>
+            <argument type="collection"/>
+            <argument type="collection">
+              <argument>FrameworkBundle</argument>
+              <argument>SecurityBundle</argument>
+              <argument>TwigBundle</argument>
+              <argument>MonologBundle</argument>
+              <argument>SwiftmailerBundle</argument>
+              <argument>DoctrineBundle</argument>
+              <argument>SensioFrameworkExtraBundle</argument>
+              <argument>AsseticBundle</argument>
+              <argument>VichUploaderBundle</argument>
+              <argument>FPNTagBundle</argument>
+              <argument>FogsTaggingBundle</argument>
+              <argument>AppBundle</argument>
+              <argument>DebugBundle</argument>
+              <argument>WebProfilerBundle</argument>
+              <argument>SensioDistributionBundle</argument>
+              <argument>SensioGeneratorBundle</argument>
+            </argument>
+            <argument type="service">
+              <service class="Symfony\Bundle\AsseticBundle\DefaultValueSupplier" public="false">
+                <argument type="service" id="service_container"/>
+              </service>
+            </argument>
           </service>
         </argument>
       </call>
@@ -2003,7 +2111,7 @@
           </call>
           <call method="addEventSubscriber">
             <argument type="service">
-              <service class="Vich\UploaderBundle\EventListener\Doctrine\RemoveListener" public="false">
+              <service class="Vich\UploaderBundle\EventListener\Doctrine\UploadListener" public="false">
                 <tag name="doctrine.event_subscriber" priority="0"/>
                 <argument>product_image</argument>
                 <argument type="service">
@@ -2016,7 +2124,7 @@
           </call>
           <call method="addEventSubscriber">
             <argument type="service">
-              <service class="Vich\UploaderBundle\EventListener\Doctrine\UploadListener" public="false">
+              <service class="Vich\UploaderBundle\EventListener\Doctrine\RemoveListener" public="false">
                 <tag name="doctrine.event_subscriber" priority="0"/>
                 <argument>product_image</argument>
                 <argument type="service">
@@ -2026,6 +2134,9 @@
                 <argument type="service" id="vich_uploader.upload_handler"/>
               </service>
             </argument>
+          </call>
+          <call method="addEventSubscriber">
+            <argument type="service" id="fogs_tag.taggable.subscriber"/>
           </call>
           <call method="addEventListener">
             <argument type="collection">
@@ -2083,6 +2194,8 @@
         <service class="Doctrine\ORM\Configuration" public="false">
           <call method="setEntityNamespaces">
             <argument type="collection">
+              <argument key="FPNTagBundle">FPN\TagBundle\Entity</argument>
+              <argument key="FogsTaggingBundle">Fogs\TaggingBundle\Entity</argument>
               <argument key="AppBundle">AppBundle\Entity</argument>
             </argument>
           </call>
@@ -2100,9 +2213,35 @@
               <service class="Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain" public="false">
                 <call method="addDriver">
                   <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver" public="false">
+                      <argument type="collection">
+                        <argument key="/home/iazel/workspace/php/prontopro/PHPTest/vendor/fpn/tag-bundle/FPN/TagBundle/Resources/config/doctrine">FPN\TagBundle\Entity</argument>
+                      </argument>
+                      <call method="setGlobalBasename">
+                        <argument>mapping</argument>
+                      </call>
+                    </service>
+                  </argument>
+                  <argument>FPN\TagBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
                     <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
                       <argument type="service" id="annotation_reader"/>
                       <argument type="collection">
+                        <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/fogs/tagging-bundle/Fogs/TaggingBundle/Entity</argument>
+                        <argument>/home/iazel/workspace/php/prontopro/PHPTest/src/AppBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>Fogs\TaggingBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/fogs/tagging-bundle/Fogs/TaggingBundle/Entity</argument>
                         <argument>/home/iazel/workspace/php/prontopro/PHPTest/src/AppBundle/Entity</argument>
                       </argument>
                     </service>
@@ -2193,6 +2332,548 @@
       <argument type="service" id="security.role_hierarchy" on-invalid="null"/>
       <argument type="service" id="security.token_storage" on-invalid="null"/>
       <argument type="service" id="security.authorization_checker" on-invalid="null"/>
+    </service>
+    <service id="assetic.filter_manager" class="Symfony\Bundle\AsseticBundle\FilterManager">
+      <argument type="service" id="service_container"/>
+      <argument type="collection">
+        <argument key="cssrewrite">assetic.filter.cssrewrite</argument>
+      </argument>
+    </service>
+    <service id="assetic.asset_manager" class="Assetic\Factory\LazyAssetManager">
+      <argument type="service" id="assetic.asset_factory"/>
+      <argument type="collection">
+        <argument key="config" type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Loader\ConfigurationLoader" public="false">
+            <tag name="assetic.formula_loader" alias="config"/>
+          </service>
+        </argument>
+        <argument key="twig" type="service">
+          <service class="Assetic\Factory\Loader\CachedFormulaLoader" public="false">
+            <tag name="assetic.formula_loader" alias="twig"/>
+            <tag name="assetic.templating.twig"/>
+            <argument type="service">
+              <service class="Assetic\Extension\Twig\TwigFormulaLoader" public="false">
+                <tag name="assetic.templating.twig"/>
+                <tag name="monolog.logger" channel="assetic"/>
+                <argument type="service" id="twig"/>
+                <argument type="service" id="monolog.logger.assetic" on-invalid="ignore"/>
+              </service>
+            </argument>
+            <argument type="service">
+              <service class="Assetic\Cache\ConfigCache" public="false">
+                <argument>/home/iazel/workspace/php/prontopro/PHPTest/var/cache/dev/assetic/config</argument>
+              </service>
+            </argument>
+            <argument>true</argument>
+          </service>
+        </argument>
+      </argument>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\ConfigurationResource" public="false">
+            <tag name="assetic.formula_resource" loader="config"/>
+            <argument type="collection">
+              <argument key="tagging_css" type="collection">
+                <argument type="collection">
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/../vendor/max-favilli/tagmanager/tagmanager.css</argument>
+                </argument>
+                <argument type="collection"/>
+                <argument type="collection">
+                  <argument key="output">css/tagging.css</argument>
+                </argument>
+              </argument>
+              <argument key="typeahead_css" type="collection">
+                <argument type="collection">
+                  <argument>@FogsTaggingBundle/Resources/public/typeahead.css</argument>
+                </argument>
+                <argument type="collection"/>
+                <argument type="collection">
+                  <argument key="output">css/typeahead.css</argument>
+                </argument>
+              </argument>
+              <argument key="typeahead_js" type="collection">
+                <argument type="collection">
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/../vendor/twitter/typeahead.js/dist/typeahead.bundle.js</argument>
+                </argument>
+                <argument type="collection"/>
+                <argument type="collection">
+                  <argument key="output">js/typeahead.min.js</argument>
+                </argument>
+              </argument>
+              <argument key="tagging_js" type="collection">
+                <argument type="collection">
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/../vendor/max-favilli/tagmanager/tagmanager.js</argument>
+                  <argument>@FogsTaggingBundle/Resources/public/tagging.js</argument>
+                </argument>
+                <argument type="collection"/>
+                <argument type="collection">
+                  <argument key="output">js/tagging-bundle.js</argument>
+                </argument>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>config</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FrameworkBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/FrameworkBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FrameworkBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SecurityBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/SecurityBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SecurityBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>TwigBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/TwigBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>TwigBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>MonologBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/MonologBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>MonologBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/monolog-bundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SwiftmailerBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/SwiftmailerBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SwiftmailerBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/swiftmailer-bundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DoctrineBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/DoctrineBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DoctrineBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/doctrine/doctrine-bundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioFrameworkExtraBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/SensioFrameworkExtraBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioFrameworkExtraBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/sensio/framework-extra-bundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AsseticBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/AsseticBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AsseticBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/assetic-bundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>VichUploaderBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/VichUploaderBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>VichUploaderBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/vich/uploader-bundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FPNTagBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/FPNTagBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FPNTagBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/fpn/tag-bundle/FPN/TagBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FogsTaggingBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/FogsTaggingBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FogsTaggingBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/fogs/tagging-bundle/Fogs/TaggingBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AppBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/AppBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AppBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/src/AppBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DebugBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/DebugBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DebugBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>WebProfilerBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/WebProfilerBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>WebProfilerBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioDistributionBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/SensioDistributionBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioDistributionBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/sensio/distribution-bundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioGeneratorBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/SensioGeneratorBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioGeneratorBundle</argument>
+                  <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/sensio/generator-bundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="service" id="templating.loader"/>
+            <argument></argument>
+            <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/Resources/views</argument>
+            <argument>/\.[^.]+\.twig$/</argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+    </service>
+    <service id="assetic.asset_factory" class="Symfony\Bundle\AsseticBundle\Factory\AssetFactory" public="false">
+      <argument type="service" id="kernel"/>
+      <argument type="service" id="service_container"/>
+      <argument type="service">
+        <service class="Symfony\Component\DependencyInjection\ParameterBag\ParameterBag" public="false">
+          <factory service="service_container" method="getParameterBag"/>
+        </service>
+      </argument>
+      <argument>/home/iazel/workspace/php/prontopro/PHPTest/app/../web</argument>
+      <argument>true</argument>
+    </service>
+    <service id="assetic.filter.cssrewrite" class="Assetic\Filter\CssRewriteFilter">
+      <tag name="assetic.filter" alias="cssrewrite"/>
     </service>
     <service id="vich_uploader.namer_uniqid.product_image" class="Vich\UploaderBundle\Naming\UniqidNamer"/>
     <service id="vich_uploader.templating.helper.uploader_helper" class="Vich\UploaderBundle\Templating\Helper\UploaderHelper">
@@ -2289,6 +2970,22 @@
         </service>
       </argument>
       <argument type="service" id="debug.event_dispatcher"/>
+    </service>
+    <service id="fpn_tag.tag_manager" class="Fogs\TaggingBundle\Service\TagManager">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <argument>Fogs\TaggingBundle\Entity\Tag</argument>
+      <argument>Fogs\TaggingBundle\Entity\Tagging</argument>
+      <argument type="service" id="fpn_tag.slugifier.default"/>
+    </service>
+    <service id="fpn_tag.slugifier.default" class="FPN\TagBundle\Util\Slugifier"/>
+    <service id="fogs_tag.form.tags" class="Fogs\TaggingBundle\Form\TagsType">
+      <tag name="form.type" alias="tags"/>
+      <argument type="service" id="fpn_tag.tag_manager"/>
+    </service>
+    <service id="fogs_tag.taggable.subscriber" class="Fogs\TaggingBundle\EventListener\TaggableSubscriber">
+      <tag name="doctrine.event_subscriber" connection="default"/>
+      <argument type="service" id="service_container"/>
+      <argument>fpn_tag.tag_manager</argument>
     </service>
     <service id="data_collector.dump" class="Symfony\Component\HttpKernel\DataCollector\DumpDataCollector">
       <tag name="data_collector" id="dump" template="@Debug/Profiler/dump.html.twig" priority="240"/>
@@ -2506,6 +3203,18 @@
         <argument type="service" id="monolog.handler.debug"/>
       </call>
     </service>
+    <service id="monolog.logger.assetic" class="Symfony\Bridge\Monolog\Logger">
+      <argument>assetic</argument>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.debug"/>
+      </call>
+    </service>
     <service id="monolog.handler.debug" class="Symfony\Bridge\Monolog\Handler\DebugHandler">
       <argument>100</argument>
       <argument>true</argument>
@@ -2594,6 +3303,10 @@
       <call method="addPath">
         <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/vich/uploader-bundle/Resources/views</argument>
         <argument>VichUploader</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/fogs/tagging-bundle/Fogs/TaggingBundle/Resources/views</argument>
+        <argument>FogsTagging</argument>
       </call>
       <call method="addPath">
         <argument>/home/iazel/workspace/php/prontopro/PHPTest/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
@@ -2697,6 +3410,7 @@
     <service id="doctrine.orm.default_metadata_cache" alias="doctrine_cache.providers.doctrine.orm.default_metadata_cache"/>
     <service id="doctrine.orm.default_result_cache" alias="doctrine_cache.providers.doctrine.orm.default_result_cache"/>
     <service id="doctrine.orm.default_query_cache" alias="doctrine_cache.providers.doctrine.orm.default_query_cache"/>
+    <service id="fpn_tag.slugifier" alias="fpn_tag.slugifier.default"/>
     <service id="console.command.sensiolabs_security_command_securitycheckercommand" alias="sensio_distribution.security_checker.command"/>
   </services>
 </container>

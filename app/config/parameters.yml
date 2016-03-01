@@ -9,3 +9,4 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: e6942b2b1750a5704d4ae00963f275aadca6a96a
+    product_image_destination: '%kernel.root_dir%/../web/images/p'

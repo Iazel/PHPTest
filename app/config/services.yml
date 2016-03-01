@@ -11,3 +11,8 @@ services:
     vm.create_product:
         class: AppBundle\ViewModel\CreateProduct
         arguments: ['@templating']
+
+    app.form.type.tags:
+        class: AppBundle\Form\Type\TagsType
+        arguments: [ "@fpn_tag.tag_manager" ]
+        tags: [{ name: form.type }]

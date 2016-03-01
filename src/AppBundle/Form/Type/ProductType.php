@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\FormType;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +19,9 @@ class ProductType extends AbstractType {
                 'constraints' => array(new A\Image),
             ))
             ->add('desc', F\TextareaType::class, array('required' => false))
+            ->add('tags', TagsType::class, array(
+                'constraints' => array(new A\NotBlank),
+            ))
             ->add('save', F\SubmitType::class)
             ;
     }

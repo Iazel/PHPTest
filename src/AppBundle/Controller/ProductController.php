@@ -2,7 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
-use AppBundle\FormType\ProductType;
+use AppBundle\Form\Type\ProductType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
