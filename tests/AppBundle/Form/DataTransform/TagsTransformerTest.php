@@ -1,9 +1,10 @@
 <?php
 namespace AppBundle\Form\DataTransform;
 
+use AppBundle\Entity\Tag;
 use AppBundle\TestHelper\DbTrait;
 use AppBundle\TestHelper\ServiceTestCase;
-use AppBundle\Entity\Tag;
+use AppBundle\DataFixtures\ORM\LoadTagsTransformData;
 
 class TagsTransformerTest extends ServiceTestCase
 {
@@ -18,11 +19,7 @@ class TagsTransformerTest extends ServiceTestCase
     public function testReverseTransform()
     {
         $this->ensureCleanDB();
-        $this->populateDatabaseWith(array(
-            $this->new_tag('test1'),
-            $this->new_tag('test2'),
-            $this->new_tag('test3'),
-        ));
+        $this->populateDatabaseWith(new LoadTagsTransformData);
 
         $t = $this->subj();
         $tags = $t->reverseTransform('test1,test2,test3');
@@ -45,11 +42,6 @@ class TagsTransformerTest extends ServiceTestCase
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         return new TagsTransformer($em);
-    }
-
-    private function new_tag($name)
-    {
-        return new Tag($name);
     }
 
     private function joinNames($tags)

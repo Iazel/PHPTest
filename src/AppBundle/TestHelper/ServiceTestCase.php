@@ -7,17 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ServiceTestCase extends KernelTestCase
 {
+    use ContainerTrait;
+
     public function setUp()
     {
         parent::setUp();
         static::bootKernel();
     }
     
-    protected function getContainer()
-    {
-        return static::$kernel->getContainer();
-    }
-
     protected function crawler(Response $resp, $type = 'text/html')
     {
         $c = new Crawler;

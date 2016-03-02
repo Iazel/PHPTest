@@ -6,9 +6,9 @@
 <div class="container">
   <h1 class="page-title">{{ 'page_title.product_list'|trans }}</h1>
 
-  <form class="search push-right" method="get">
-    <input type="form-control form-small" name="q" value="{{ current_search_term }}">
-    <button class="btn btn-default">{{ 'search'|trans }}<button>
+  <form class="search pull-right" method="get">
+    <input class="search-control" type="text" name="q" value="{{ current_search_term }}" placeholder="tag1, tag2, ...">
+    <button class="btn btn-default">{{ 'search'|trans }}</button>
   </form>
 
   <table class="table table-striped products-list">

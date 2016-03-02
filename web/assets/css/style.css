@@ -1,0 +1,10 @@
+.search-control {
+  height: 2.4em;
+  border: 1px solid #ddd;
+  padding: 0.4em 0.5em;
+}
+
+.nothing-found {
+  text-align: center;
+  font-size: 1.3em;
+}

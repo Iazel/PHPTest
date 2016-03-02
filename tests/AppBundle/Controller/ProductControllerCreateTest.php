@@ -5,7 +5,7 @@ use AppBundle\TestHelper\DbTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ProductControllerTest extends WebTestCase
+class ProductControllerCreateTest extends WebTestCase
 {
     use DbTrait;
 
@@ -15,7 +15,7 @@ class ProductControllerTest extends WebTestCase
         static::setupDatabase();
     }
 
-    public function testCreateAction_OkFlow()
+    public function testOkFlow()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/product/create');
@@ -32,7 +32,7 @@ class ProductControllerTest extends WebTestCase
         );
     }
 
-    public function testCreateAction_InvalidFlow()
+    public function testInvalidFlow()
     {
         $client = static::createClient();
         // Empty request
@@ -43,7 +43,7 @@ class ProductControllerTest extends WebTestCase
         );
     }
 
-    public function testCreateAction_ImageUpload()
+    public function testImageUpload()
     {
         $client = static::createClient();
         $dest = $this->doImageUpload($client, 'image.jpg');
@@ -79,6 +79,7 @@ class ProductControllerTest extends WebTestCase
             ->selectButton('product[save]')
             ->form($data);
     }
+
     private function getValidCreateForm($client)
     {
         return $this->getCreateForm($client, array(

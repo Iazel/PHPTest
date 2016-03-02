@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
+use AppBundle\Finder\ProductFinder;
 use AppBundle\Form\Type\ProductType;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -36,10 +37,18 @@ class ProductController extends Controller
     /**
      * @Route("/product/list", name="product_list")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $products = $this->getRepo()->findAllMostRecent();
-        return $this->get('vm.product_list')->render($products);
+        $finder = $this->createFinder();
+        $finder->mostRecent();
+
+        $q = $request->query->get('q', '');
+        if($q !== '') {
+            $tags = array_filter(array_map('trim', explode(',', $q)));
+            $finder->havingTagsLike($tags);
+        }
+
+        return $this->get('vm.product_list')->render($finder->getResult(), $q);
     }
 
     private function t($str)
@@ -47,9 +56,9 @@ class ProductController extends Controller
         return $this->get('translator')->trans($str);
     }
 
-    private function getRepo()
+    private function createFinder()
     {
-        $this->getDoctrine()->getManager()->getRepository('AppBundle:Product');
-        return $this;
+        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
+        return new ProductFinder($qb);
     }
 }

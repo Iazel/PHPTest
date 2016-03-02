@@ -41,7 +41,7 @@ class LoadProductData implements FixtureInterface, ContainerAwareInterface
             ->setDesc('Lorem ipsum dolor sit amet')
             ->setImageFile(new File($image, false))
             ->setCreatedAt(new \DateTime($created_at))
-            ->setTags($tags) // doesn't return this!
+            ->setTags($tags)
             ;
 
         $this->em->persist($p);

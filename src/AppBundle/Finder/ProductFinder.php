@@ -14,17 +14,20 @@ class ProductFinder extends Base
 
     public function mostRecent()
     {
-        $this->qb->orderBy('created_at', 'DESC');
+        $this->qb->orderBy('p.created_at', 'DESC');
         return $this;
     }
 
-    public function havingTagLike($tag)
+    public function havingTagsLike($tags)
     {
         $qb = $this->qb;
-        $qb->join('p.tags', 't')
-            ->where($qb->expr()->like('t.name', ':tagname'))
-            ->setParameter('tagname', $tag.'%')
-            ;
+        $or = $qb->expr()->orX();
+        $qb->join('p.tags', 't')->where($or)->groupBy('p.id');
+
+        foreach($tags as $i => $tag) {
+            $or->add( $qb->expr()->like('t.name', ":tagname$i") );
+            $qb->setParameter("tagname$i", $tag.'%');
+        }
         return $this;
     }
 }
