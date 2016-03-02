@@ -404,6 +404,10 @@
       <tag name="form.type"/>
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
     </service>
+    <service id="app.twig.thumb_image_ext" class="AppBundle\Twig\Extension\ThumbImageExtension">
+      <tag name="twig.extension"/>
+      <argument type="service" id="vich_uploader.templating.helper.uploader_helper"/>
+    </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
       <argument type="service" id="kernel"/>
@@ -1527,7 +1531,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>56d5ce99c97b25.90536810</argument>
+            <argument>56d688a8d95679.94846603</argument>
           </service>
         </argument>
       </argument>
@@ -1656,7 +1660,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>56d5ce99c97b25.90536810</argument>
+            <argument>56d688a8d95679.94846603</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -1697,6 +1701,11 @@
       <argument type="collection">
         <argument key="debug">true</argument>
         <argument key="strict_variables">true</argument>
+        <argument key="date" type="collection">
+          <argument key="format">d/m/Y, H:s:i</argument>
+          <argument key="interval_format">%d days</argument>
+          <argument key="timezone">null</argument>
+        </argument>
         <argument key="form_themes" type="collection">
           <argument>form_div_layout.html.twig</argument>
           <argument>VichUploaderBundle:Form:fields.html.twig</argument>
@@ -1707,17 +1716,15 @@
         <argument key="cache">/home/iazel/workspace/php/prontopro/PHPTest/var/cache/dev/twig</argument>
         <argument key="charset">UTF-8</argument>
         <argument key="paths" type="collection"/>
-        <argument key="date" type="collection">
-          <argument key="format">F j, Y H:i</argument>
-          <argument key="interval_format">%d days</argument>
-          <argument key="timezone">null</argument>
-        </argument>
         <argument key="number_format" type="collection">
           <argument key="decimals">0</argument>
           <argument key="decimal_point">.</argument>
           <argument key="thousands_separator">,</argument>
         </argument>
       </argument>
+      <call method="addExtension">
+        <argument type="service" id="app.twig.thumb_image_ext"/>
+      </call>
       <call method="addExtension">
         <argument type="service">
           <service class="Symfony\Bridge\Twig\Extension\LogoutUrlExtension" public="false">
@@ -1896,7 +1903,7 @@
       </call>
       <configurator method="configure">
         <service class="Symfony\Bundle\TwigBundle\DependencyInjection\Configurator\EnvironmentConfigurator" public="false">
-          <argument>F j, Y H:i</argument>
+          <argument>d/m/Y, H:s:i</argument>
           <argument>%d days</argument>
           <argument>null</argument>
           <argument>0</argument>

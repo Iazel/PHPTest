@@ -29,8 +29,30 @@ class ProductListTest extends ServiceTestCase
 
         $this->assertSame('2015-01-01, 00:00:00',
             trim($first->filter('.product-created-at')->text()),
-            'It should render the created date')
-            ;
+            'It should render the created date');
+
+        $this->assertCount(1,
+            $crawler->filter('form.search'),
+            'It should render a form search');
+        
+        $this->assertSame('',
+            $crawler->filter('form.search [name="q"]')->attr('value'),
+            'Default search term value should be empty');
+
+        $crawler = $this->crawler( $this->subj()->render([], 'test') );
+        $this->assertSame('test',
+            $crawler->filter('form.search [name="q"]')->attr('value'),
+            'It should set the right term');
+
+        $nf = $crawler->filter('td.nothing-found');
+        $this->assertCount(1,
+            $nf,
+            'It should render a message when there\'s no products');
+
+        $span = $crawler->filter('.products-list thead > th')->count();
+        $this->assertSame($span,
+            (int) $nf->eq(0)->attr('colspan'),
+            'Nothing found should have a colspan equal to the headers');
     }
 
 

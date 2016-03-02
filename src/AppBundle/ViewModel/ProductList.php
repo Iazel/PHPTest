@@ -12,10 +12,11 @@ class ProductList
     /**
      * @param array $products
      */
-    public function render($products)
+    public function render($products, $term = '')
     {
         return $this->temp->renderResponse('products/list.html.twig', array(
-            'products' => $products
+            'products' => $products,
+            'current_search_term' => $term,
         ));
     }
 }

@@ -5,6 +5,12 @@
 {% block body %}
 <div class="container">
   <h1 class="page-title">{{ 'page_title.product_list'|trans }}</h1>
+
+  <form class="search push-right" method="get">
+    <input type="form-control form-small" name="q" value="{{ current_search_term }}">
+    <button class="btn btn-default">{{ 'search'|trans }}<button>
+  </form>
+
   <table class="table table-striped products-list">
     <thead>
       <th>{{ 'product.name'|trans }}</th>
@@ -21,6 +27,10 @@
           {{ p.createdAt|date }}
         </td>
       </tr>
+      {% else %}
+      <td colspan="2" class="nothing-found">
+        {{ 'products.nothing-found'|trans }}
+      </td>
       {% endfor %}
     </tbody>
   </table>
