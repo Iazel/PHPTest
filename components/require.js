@@ -2019,12 +2019,6 @@ var requirejs, require, define;
 }(this));
 
 var components = {
-    "packages": [
-        {
-            "name": "tagmanager",
-            "main": "tagmanager-built.js"
-        }
-    ],
     "baseUrl": "components"
 };
 if (typeof require !== "undefined" && require.config) {

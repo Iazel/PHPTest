@@ -33,10 +33,6 @@ class appDevDebugProjectContainer extends Container
         $this->methodMap = array(
             'annotation_reader' => 'getAnnotationReaderService',
             'app.form.type.tags' => 'getApp_Form_Type_TagsService',
-            'assetic.asset_factory' => 'getAssetic_AssetFactoryService',
-            'assetic.asset_manager' => 'getAssetic_AssetManagerService',
-            'assetic.filter.cssrewrite' => 'getAssetic_Filter_CssrewriteService',
-            'assetic.filter_manager' => 'getAssetic_FilterManagerService',
             'assets.context' => 'getAssets_ContextService',
             'assets.packages' => 'getAssets_PackagesService',
             'cache_clearer' => 'getCacheClearerService',
@@ -68,8 +64,6 @@ class appDevDebugProjectContainer extends Container
             'doctrine_cache.providers.doctrine.orm.default_result_cache' => 'getDoctrineCache_Providers_Doctrine_Orm_DefaultResultCacheService',
             'file_locator' => 'getFileLocatorService',
             'filesystem' => 'getFilesystemService',
-            'fogs_tag.form.tags' => 'getFogsTag_Form_TagsService',
-            'fogs_tag.taggable.subscriber' => 'getFogsTag_Taggable_SubscriberService',
             'form.factory' => 'getForm_FactoryService',
             'form.registry' => 'getForm_RegistryService',
             'form.resolved_type_factory' => 'getForm_ResolvedTypeFactoryService',
@@ -113,8 +107,6 @@ class appDevDebugProjectContainer extends Container
             'form.type_extension.submit.validator' => 'getForm_TypeExtension_Submit_ValidatorService',
             'form.type_guesser.doctrine' => 'getForm_TypeGuesser_DoctrineService',
             'form.type_guesser.validator' => 'getForm_TypeGuesser_ValidatorService',
-            'fpn_tag.slugifier.default' => 'getFpnTag_Slugifier_DefaultService',
-            'fpn_tag.tag_manager' => 'getFpnTag_TagManagerService',
             'fragment.handler' => 'getFragment_HandlerService',
             'fragment.listener' => 'getFragment_ListenerService',
             'fragment.renderer.esi' => 'getFragment_Renderer_EsiService',
@@ -129,7 +121,6 @@ class appDevDebugProjectContainer extends Container
             'monolog.handler.console' => 'getMonolog_Handler_ConsoleService',
             'monolog.handler.debug' => 'getMonolog_Handler_DebugService',
             'monolog.handler.main' => 'getMonolog_Handler_MainService',
-            'monolog.logger.assetic' => 'getMonolog_Logger_AsseticService',
             'monolog.logger.doctrine' => 'getMonolog_Logger_DoctrineService',
             'monolog.logger.event' => 'getMonolog_Logger_EventService',
             'monolog.logger.php' => 'getMonolog_Logger_PhpService',
@@ -258,6 +249,7 @@ class appDevDebugProjectContainer extends Container
             'vich_uploader.templating.helper.uploader_helper' => 'getVichUploader_Templating_Helper_UploaderHelperService',
             'vich_uploader.upload_handler' => 'getVichUploader_UploadHandlerService',
             'vm.create_product' => 'getVm_CreateProductService',
+            'vm.product_list' => 'getVm_ProductListService',
             'web_profiler.controller.exception' => 'getWebProfiler_Controller_ExceptionService',
             'web_profiler.controller.profiler' => 'getWebProfiler_Controller_ProfilerService',
             'web_profiler.controller.router' => 'getWebProfiler_Controller_RouterService',
@@ -271,7 +263,6 @@ class appDevDebugProjectContainer extends Container
             'doctrine.orm.default_result_cache' => 'doctrine_cache.providers.doctrine.orm.default_result_cache',
             'doctrine.orm.entity_manager' => 'doctrine.orm.default_entity_manager',
             'event_dispatcher' => 'debug.event_dispatcher',
-            'fpn_tag.slugifier' => 'fpn_tag.slugifier.default',
             'mailer' => 'swiftmailer.mailer.default',
             'session.storage' => 'session.storage.native',
             'swiftmailer.mailer' => 'swiftmailer.mailer.default',
@@ -313,69 +304,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getApp_Form_Type_TagsService()
     {
-        return $this->services['app.form.type.tags'] = new \AppBundle\Form\Type\TagsType($this->get('fpn_tag.tag_manager'));
-    }
-
-    /**
-     * Gets the 'assetic.asset_manager' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Assetic\Factory\LazyAssetManager A Assetic\Factory\LazyAssetManager instance.
-     */
-    protected function getAssetic_AssetManagerService()
-    {
-        $a = $this->get('templating.loader');
-
-        $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($this->get('assetic.asset_factory'), array('config' => new \Symfony\Bundle\AsseticBundle\Factory\Loader\ConfigurationLoader(), 'twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig'), $this->get('monolog.logger.assetic', ContainerInterface::NULL_ON_INVALID_REFERENCE)), new \Assetic\Cache\ConfigCache((__DIR__.'/assetic/config')), true)));
-
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\ConfigurationResource(array('tagging_css' => array(0 => array(0 => ($this->targetDirs[3].'/app/../vendor/max-favilli/tagmanager/tagmanager.css')), 1 => array(), 2 => array('output' => 'css/tagging.css')), 'typeahead_css' => array(0 => array(0 => '@FogsTaggingBundle/Resources/public/typeahead.css'), 1 => array(), 2 => array('output' => 'css/typeahead.css')), 'typeahead_js' => array(0 => array(0 => ($this->targetDirs[3].'/app/../vendor/twitter/typeahead.js/dist/typeahead.bundle.js')), 1 => array(), 2 => array('output' => 'js/typeahead.min.js')), 'tagging_js' => array(0 => array(0 => ($this->targetDirs[3].'/app/../vendor/max-favilli/tagmanager/tagmanager.js'), 1 => '@FogsTaggingBundle/Resources/public/tagging.js'), 1 => array(), 2 => array('output' => 'js/tagging-bundle.js')))), 'config');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrameworkBundle', ($this->targetDirs[3].'/app/Resources/FrameworkBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrameworkBundle', ($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SecurityBundle', ($this->targetDirs[3].'/app/Resources/SecurityBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SecurityBundle', ($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'TwigBundle', ($this->targetDirs[3].'/app/Resources/TwigBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'TwigBundle', ($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'MonologBundle', ($this->targetDirs[3].'/app/Resources/MonologBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'MonologBundle', ($this->targetDirs[3].'/vendor/symfony/monolog-bundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SwiftmailerBundle', ($this->targetDirs[3].'/app/Resources/SwiftmailerBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SwiftmailerBundle', ($this->targetDirs[3].'/vendor/symfony/swiftmailer-bundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineBundle', ($this->targetDirs[3].'/app/Resources/DoctrineBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineBundle', ($this->targetDirs[3].'/vendor/doctrine/doctrine-bundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', ($this->targetDirs[3].'/app/Resources/SensioFrameworkExtraBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', ($this->targetDirs[3].'/vendor/sensio/framework-extra-bundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', ($this->targetDirs[3].'/app/Resources/AsseticBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', ($this->targetDirs[3].'/vendor/symfony/assetic-bundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'VichUploaderBundle', ($this->targetDirs[3].'/app/Resources/VichUploaderBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'VichUploaderBundle', ($this->targetDirs[3].'/vendor/vich/uploader-bundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FPNTagBundle', ($this->targetDirs[3].'/app/Resources/FPNTagBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FPNTagBundle', ($this->targetDirs[3].'/vendor/fpn/tag-bundle/FPN/TagBundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FogsTaggingBundle', ($this->targetDirs[3].'/app/Resources/FogsTaggingBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FogsTaggingBundle', ($this->targetDirs[3].'/vendor/fogs/tagging-bundle/Fogs/TaggingBundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AppBundle', ($this->targetDirs[3].'/app/Resources/AppBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AppBundle', ($this->targetDirs[3].'/src/AppBundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DebugBundle', ($this->targetDirs[3].'/app/Resources/DebugBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DebugBundle', ($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', ($this->targetDirs[3].'/app/Resources/WebProfilerBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', ($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', ($this->targetDirs[3].'/app/Resources/SensioDistributionBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', ($this->targetDirs[3].'/vendor/sensio/distribution-bundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', ($this->targetDirs[3].'/app/Resources/SensioGeneratorBundle/views'), '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', ($this->targetDirs[3].'/vendor/sensio/generator-bundle/Resources/views'), '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, '', ($this->targetDirs[3].'/app/Resources/views'), '/\\.[^.]+\\.twig$/'), 'twig');
-
-        return $instance;
-    }
-
-    /**
-     * Gets the 'assetic.filter.cssrewrite' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Assetic\Filter\CssRewriteFilter A Assetic\Filter\CssRewriteFilter instance.
-     */
-    protected function getAssetic_Filter_CssrewriteService()
-    {
-        return $this->services['assetic.filter.cssrewrite'] = new \Assetic\Filter\CssRewriteFilter();
-    }
-
-    /**
-     * Gets the 'assetic.filter_manager' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Symfony\Bundle\AsseticBundle\FilterManager A Symfony\Bundle\AsseticBundle\FilterManager instance.
-     */
-    protected function getAssetic_FilterManagerService()
-    {
-        return $this->services['assetic.filter_manager'] = new \Symfony\Bundle\AsseticBundle\FilterManager($this, array('cssrewrite' => 'assetic.filter.cssrewrite'));
+        return $this->services['app.form.type.tags'] = new \AppBundle\Form\Type\TagsType($this->get('doctrine.orm.default_entity_manager'));
     }
 
     /**
@@ -432,7 +361,7 @@ class appDevDebugProjectContainer extends Container
 
         $c = new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinder($a, $b, ($this->targetDirs[3].'/app/Resources'));
 
-        return $this->services['cache_warmer'] = new \Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate(array(0 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer($c, $this->get('templating.locator')), 1 => new \Symfony\Bundle\AsseticBundle\CacheWarmer\AssetManagerCacheWarmer($this), 2 => $this->get('kernel.class_cache.cache_warmer'), 3 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TranslationsCacheWarmer($this->get('translator')), 4 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer($this->get('router')), 5 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer($this, $c, array()), 6 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheWarmer($this->get('twig'), new \Symfony\Bundle\TwigBundle\TemplateIterator($a, ($this->targetDirs[3].'/app'), array())), 7 => new \Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer($this->get('doctrine'))));
+        return $this->services['cache_warmer'] = new \Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate(array(0 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer($c, $this->get('templating.locator')), 1 => $this->get('kernel.class_cache.cache_warmer'), 2 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TranslationsCacheWarmer($this->get('translator')), 3 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer($this->get('router')), 4 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer($this, $c, array()), 5 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheWarmer($this->get('twig'), new \Symfony\Bundle\TwigBundle\TemplateIterator($a, ($this->targetDirs[3].'/app'), array())), 6 => new \Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer($this->get('doctrine'))));
     }
 
     /**
@@ -655,9 +584,8 @@ class appDevDebugProjectContainer extends Container
 
         $f = new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this);
         $f->addEventSubscriber(new \Vich\UploaderBundle\EventListener\Doctrine\CleanListener('product_image', $e, $a, $b));
-        $f->addEventSubscriber(new \Vich\UploaderBundle\EventListener\Doctrine\UploadListener('product_image', $e, $a, $b));
         $f->addEventSubscriber(new \Vich\UploaderBundle\EventListener\Doctrine\RemoveListener('product_image', $e, $a, $b));
-        $f->addEventSubscriber($this->get('fogs_tag.taggable.subscriber'));
+        $f->addEventSubscriber(new \Vich\UploaderBundle\EventListener\Doctrine\UploadListener('product_image', $e, $a, $b));
         $f->addEventListener(array(0 => 'loadClassMetadata'), $this->get('doctrine.orm.default_listeners.attach_entity_listeners'));
 
         return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_sqlite', 'dbname' => 'symfony', 'user' => 'root', 'password' => NULL, 'path' => ($this->targetDirs[3].'/app/data.db3'), 'charset' => 'UTF8', 'host' => 'localhost', 'port' => NULL, 'driverOptions' => array(), 'defaultTableOptions' => array()), $d, $f, array());
@@ -686,34 +614,25 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getDoctrine_Orm_DefaultEntityManagerService()
     {
-        $a = $this->get('annotation_reader');
+        $a = new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain();
+        $a->addDriver(new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($this->get('annotation_reader'), array(0 => ($this->targetDirs[3].'/src/AppBundle/Entity'))), 'AppBundle\\Entity');
 
-        $b = new \Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver(array(($this->targetDirs[3].'/vendor/fpn/tag-bundle/FPN/TagBundle/Resources/config/doctrine') => 'FPN\\TagBundle\\Entity'));
-        $b->setGlobalBasename('mapping');
+        $b = new \Doctrine\ORM\Configuration();
+        $b->setEntityNamespaces(array('AppBundle' => 'AppBundle\\Entity'));
+        $b->setMetadataCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_metadata_cache'));
+        $b->setQueryCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_query_cache'));
+        $b->setResultCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_result_cache'));
+        $b->setMetadataDriverImpl($a);
+        $b->setProxyDir((__DIR__.'/doctrine/orm/Proxies'));
+        $b->setProxyNamespace('Proxies');
+        $b->setAutoGenerateProxyClasses(true);
+        $b->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
+        $b->setDefaultRepositoryClassName('Doctrine\\ORM\\EntityRepository');
+        $b->setNamingStrategy(new \Doctrine\ORM\Mapping\UnderscoreNamingStrategy());
+        $b->setQuoteStrategy(new \Doctrine\ORM\Mapping\DefaultQuoteStrategy());
+        $b->setEntityListenerResolver($this->get('doctrine.orm.default_entity_listener_resolver'));
 
-        $c = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($a, array(0 => ($this->targetDirs[3].'/vendor/fogs/tagging-bundle/Fogs/TaggingBundle/Entity'), 1 => ($this->targetDirs[3].'/src/AppBundle/Entity')));
-
-        $d = new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain();
-        $d->addDriver($b, 'FPN\\TagBundle\\Entity');
-        $d->addDriver($c, 'Fogs\\TaggingBundle\\Entity');
-        $d->addDriver($c, 'AppBundle\\Entity');
-
-        $e = new \Doctrine\ORM\Configuration();
-        $e->setEntityNamespaces(array('FPNTagBundle' => 'FPN\\TagBundle\\Entity', 'FogsTaggingBundle' => 'Fogs\\TaggingBundle\\Entity', 'AppBundle' => 'AppBundle\\Entity'));
-        $e->setMetadataCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_metadata_cache'));
-        $e->setQueryCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_query_cache'));
-        $e->setResultCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_result_cache'));
-        $e->setMetadataDriverImpl($d);
-        $e->setProxyDir((__DIR__.'/doctrine/orm/Proxies'));
-        $e->setProxyNamespace('Proxies');
-        $e->setAutoGenerateProxyClasses(true);
-        $e->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
-        $e->setDefaultRepositoryClassName('Doctrine\\ORM\\EntityRepository');
-        $e->setNamingStrategy(new \Doctrine\ORM\Mapping\UnderscoreNamingStrategy());
-        $e->setQuoteStrategy(new \Doctrine\ORM\Mapping\DefaultQuoteStrategy());
-        $e->setEntityListenerResolver($this->get('doctrine.orm.default_entity_listener_resolver'));
-
-        $this->services['doctrine.orm.default_entity_manager'] = $instance = \Doctrine\ORM\EntityManager::create($this->get('doctrine.dbal.default_connection'), $e);
+        $this->services['doctrine.orm.default_entity_manager'] = $instance = \Doctrine\ORM\EntityManager::create($this->get('doctrine.dbal.default_connection'), $b);
 
         $this->get('doctrine.orm.default_manager_configurator')->configure($instance);
 
@@ -850,32 +769,6 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
-     * Gets the 'fogs_tag.form.tags' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Fogs\TaggingBundle\Form\TagsType A Fogs\TaggingBundle\Form\TagsType instance.
-     */
-    protected function getFogsTag_Form_TagsService()
-    {
-        return $this->services['fogs_tag.form.tags'] = new \Fogs\TaggingBundle\Form\TagsType($this->get('fpn_tag.tag_manager'));
-    }
-
-    /**
-     * Gets the 'fogs_tag.taggable.subscriber' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Fogs\TaggingBundle\EventListener\TaggableSubscriber A Fogs\TaggingBundle\EventListener\TaggableSubscriber instance.
-     */
-    protected function getFogsTag_Taggable_SubscriberService()
-    {
-        return $this->services['fogs_tag.taggable.subscriber'] = new \Fogs\TaggingBundle\EventListener\TaggableSubscriber($this, 'fpn_tag.tag_manager');
-    }
-
-    /**
      * Gets the 'form.factory' service.
      *
      * This service is shared.
@@ -898,7 +791,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getForm_RegistryService()
     {
-        return $this->services['form.registry'] = new \Symfony\Component\Form\FormRegistry(array(0 => new \Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension($this, array('AppBundle\\Form\\Type\\TagsType' => 'app.form.type.tags', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType' => 'form.type.form', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType' => 'form.type.birthday', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType' => 'form.type.checkbox', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType' => 'form.type.choice', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType' => 'form.type.collection', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CountryType' => 'form.type.country', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType' => 'form.type.date', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType' => 'form.type.datetime', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType' => 'form.type.email', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType' => 'form.type.file', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType' => 'form.type.hidden', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType' => 'form.type.integer', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType' => 'form.type.language', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\LocaleType' => 'form.type.locale', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType' => 'form.type.money', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType' => 'form.type.number', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType' => 'form.type.password', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType' => 'form.type.percent', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType' => 'form.type.radio', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType' => 'form.type.range', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType' => 'form.type.repeated', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\SearchType' => 'form.type.search', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType' => 'form.type.textarea', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType' => 'form.type.text', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType' => 'form.type.time', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType' => 'form.type.timezone', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\UrlType' => 'form.type.url', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType' => 'form.type.button', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType' => 'form.type.submit', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ResetType' => 'form.type.reset', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CurrencyType' => 'form.type.currency', 'Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType' => 'form.type.entity', 'Vich\\UploaderBundle\\Form\\Type\\VichFileType' => 'vich_uploader.form.type.file', 'Vich\\UploaderBundle\\Form\\Type\\VichImageType' => 'vich_uploader.form.type.image', 'Fogs\\TaggingBundle\\Form\\TagsType' => 'fogs_tag.form.tags'), array('Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType' => array(0 => 'form.type_extension.form.http_foundation', 1 => 'form.type_extension.form.validator', 2 => 'form.type_extension.csrf', 3 => 'form.type_extension.form.data_collector'), 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType' => array(0 => 'form.type_extension.repeated.validator'), 'Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType' => array(0 => 'form.type_extension.submit.validator')), array(0 => 'form.type_guesser.validator', 1 => 'form.type_guesser.doctrine'))), $this->get('form.resolved_type_factory'));
+        return $this->services['form.registry'] = new \Symfony\Component\Form\FormRegistry(array(0 => new \Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension($this, array('AppBundle\\Form\\Type\\TagsType' => 'app.form.type.tags', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType' => 'form.type.form', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType' => 'form.type.birthday', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType' => 'form.type.checkbox', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType' => 'form.type.choice', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType' => 'form.type.collection', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CountryType' => 'form.type.country', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType' => 'form.type.date', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType' => 'form.type.datetime', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType' => 'form.type.email', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType' => 'form.type.file', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType' => 'form.type.hidden', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType' => 'form.type.integer', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType' => 'form.type.language', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\LocaleType' => 'form.type.locale', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType' => 'form.type.money', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType' => 'form.type.number', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType' => 'form.type.password', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType' => 'form.type.percent', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType' => 'form.type.radio', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType' => 'form.type.range', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType' => 'form.type.repeated', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\SearchType' => 'form.type.search', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType' => 'form.type.textarea', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType' => 'form.type.text', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType' => 'form.type.time', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType' => 'form.type.timezone', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\UrlType' => 'form.type.url', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType' => 'form.type.button', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType' => 'form.type.submit', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ResetType' => 'form.type.reset', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CurrencyType' => 'form.type.currency', 'Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType' => 'form.type.entity', 'Vich\\UploaderBundle\\Form\\Type\\VichFileType' => 'vich_uploader.form.type.file', 'Vich\\UploaderBundle\\Form\\Type\\VichImageType' => 'vich_uploader.form.type.image'), array('Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType' => array(0 => 'form.type_extension.form.http_foundation', 1 => 'form.type_extension.form.validator', 2 => 'form.type_extension.csrf', 3 => 'form.type_extension.form.data_collector'), 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType' => array(0 => 'form.type_extension.repeated.validator'), 'Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType' => array(0 => 'form.type_extension.submit.validator')), array(0 => 'form.type_guesser.validator', 1 => 'form.type_guesser.doctrine'))), $this->get('form.resolved_type_factory'));
     }
 
     /**
@@ -1435,32 +1328,6 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
-     * Gets the 'fpn_tag.slugifier.default' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \FPN\TagBundle\Util\Slugifier A FPN\TagBundle\Util\Slugifier instance.
-     */
-    protected function getFpnTag_Slugifier_DefaultService()
-    {
-        return $this->services['fpn_tag.slugifier.default'] = new \FPN\TagBundle\Util\Slugifier();
-    }
-
-    /**
-     * Gets the 'fpn_tag.tag_manager' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Fogs\TaggingBundle\Service\TagManager A Fogs\TaggingBundle\Service\TagManager instance.
-     */
-    protected function getFpnTag_TagManagerService()
-    {
-        return $this->services['fpn_tag.tag_manager'] = new \Fogs\TaggingBundle\Service\TagManager($this->get('doctrine.orm.default_entity_manager'), 'Fogs\\TaggingBundle\\Entity\\Tag', 'Fogs\\TaggingBundle\\Entity\\Tagging', $this->get('fpn_tag.slugifier.default'));
-    }
-
-    /**
      * Gets the 'fragment.handler' service.
      *
      * This service is shared.
@@ -1670,25 +1537,6 @@ class appDevDebugProjectContainer extends Container
     protected function getMonolog_Handler_MainService()
     {
         return $this->services['monolog.handler.main'] = new \Monolog\Handler\StreamHandler(($this->targetDirs[2].'/logs/dev.log'), 100, true, NULL);
-    }
-
-    /**
-     * Gets the 'monolog.logger.assetic' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Symfony\Bridge\Monolog\Logger A Symfony\Bridge\Monolog\Logger instance.
-     */
-    protected function getMonolog_Logger_AsseticService()
-    {
-        $this->services['monolog.logger.assetic'] = $instance = new \Symfony\Bridge\Monolog\Logger('assetic');
-
-        $instance->pushHandler($this->get('monolog.handler.console'));
-        $instance->pushHandler($this->get('monolog.handler.main'));
-        $instance->pushHandler($this->get('monolog.handler.debug'));
-
-        return $instance;
     }
 
     /**
@@ -2132,7 +1980,7 @@ class appDevDebugProjectContainer extends Container
 
         $e = new \Symfony\Component\Security\Http\AccessMap();
 
-        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($e, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', $a, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE)), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '56d5337f1c55d2.06618080', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $e, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($d, $d), 'main', NULL, NULL, NULL, $a, false));
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($e, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', $a, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE)), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '56d5ce99c97b25.90536810', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $e, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($d, $d), 'main', NULL, NULL, NULL, $a, false));
     }
 
     /**
@@ -3064,7 +2912,7 @@ class appDevDebugProjectContainer extends Container
             $c->setRequestStack($b);
         }
 
-        $this->services['twig'] = $instance = new \Twig_Environment($this->get('twig.loader'), array('debug' => true, 'strict_variables' => true, 'form_themes' => array(0 => 'form_div_layout.html.twig', 1 => 'VichUploaderBundle:Form:fields.html.twig'), 'exception_controller' => 'twig.controller.exception:showAction', 'autoescape' => 'filename', 'cache' => (__DIR__.'/twig'), 'charset' => 'UTF-8', 'paths' => array(), 'date' => array('format' => 'F j, Y H:i', 'interval_format' => '%d days', 'timezone' => NULL), 'number_format' => array('decimals' => 0, 'decimal_point' => '.', 'thousands_separator' => ',')));
+        $this->services['twig'] = $instance = new \Twig_Environment($this->get('twig.loader'), array('debug' => true, 'strict_variables' => true, 'form_themes' => array(0 => 'form_div_layout.html.twig', 1 => 'VichUploaderBundle:Form:fields.html.twig', 2 => 'form/widgets.html.twig'), 'exception_controller' => 'twig.controller.exception:showAction', 'autoescape' => 'filename', 'cache' => (__DIR__.'/twig'), 'charset' => 'UTF-8', 'paths' => array(), 'date' => array('format' => 'F j, Y H:i', 'interval_format' => '%d days', 'timezone' => NULL), 'number_format' => array('decimals' => 0, 'decimal_point' => '.', 'thousands_separator' => ',')));
 
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\LogoutUrlExtension($this->get('security.logout_url_generator')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\SecurityExtension($this->get('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
@@ -3078,10 +2926,9 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\ExpressionExtension());
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpKernelExtension($this->get('fragment.handler')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpFoundationExtension($b, $this->get('router.request_context', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
-        $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig', 1 => 'VichUploaderBundle:Form:fields.html.twig', 2 => 'FogsTaggingBundle:Form:widgets.html.twig')), $this->get('security.csrf.token_manager', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
+        $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig', 1 => 'VichUploaderBundle:Form:fields.html.twig', 2 => 'form/widgets.html.twig')), $this->get('security.csrf.token_manager', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
         $instance->addExtension(new \Twig_Extension_Debug());
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
-        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), false, array(), array(0 => 'FrameworkBundle', 1 => 'SecurityBundle', 2 => 'TwigBundle', 3 => 'MonologBundle', 4 => 'SwiftmailerBundle', 5 => 'DoctrineBundle', 6 => 'SensioFrameworkExtraBundle', 7 => 'AsseticBundle', 8 => 'VichUploaderBundle', 9 => 'FPNTagBundle', 10 => 'FogsTaggingBundle', 11 => 'AppBundle', 12 => 'DebugBundle', 13 => 'WebProfilerBundle', 14 => 'SensioDistributionBundle', 15 => 'SensioGeneratorBundle'), new \Symfony\Bundle\AsseticBundle\DefaultValueSupplier($this)));
         $instance->addExtension(new \Vich\UploaderBundle\Twig\Extension\UploaderExtension($this->get('vich_uploader.templating.helper.uploader_helper')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\DumpExtension($this->get('var_dumper.cloner')));
         $instance->addExtension(new \Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension());
@@ -3148,7 +2995,6 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/swiftmailer-bundle/Resources/views'), 'Swiftmailer');
         $instance->addPath(($this->targetDirs[3].'/vendor/doctrine/doctrine-bundle/Resources/views'), 'Doctrine');
         $instance->addPath(($this->targetDirs[3].'/vendor/vich/uploader-bundle/Resources/views'), 'VichUploader');
-        $instance->addPath(($this->targetDirs[3].'/vendor/fogs/tagging-bundle/Fogs/TaggingBundle/Resources/views'), 'FogsTagging');
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views'), 'Debug');
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views'), 'WebProfiler');
         $instance->addPath(($this->targetDirs[3].'/app/Resources/views'));
@@ -3303,7 +3149,7 @@ class appDevDebugProjectContainer extends Container
     {
         if ($lazyLoad) {
 
-            return $this->services['vich_uploader.download_handler'] = new VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec697f1e12dea6cf9b47165d6564d6b936(
+            return $this->services['vich_uploader.download_handler'] = new VichUploaderBundleHandlerDownloadHandler_0000000008e807e200000000458618d7697f1e12dea6cf9b47165d6564d6b936(
                 function (&$wrappedInstance, \ProxyManager\Proxy\LazyLoadingInterface $proxy) {
                     $wrappedInstance = $this->getVichUploader_DownloadHandlerService(false);
 
@@ -3435,7 +3281,7 @@ class appDevDebugProjectContainer extends Container
     {
         if ($lazyLoad) {
 
-            return $this->services['vich_uploader.upload_handler'] = new VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697f1e12dea6cf9b47165d6564d6b936(
+            return $this->services['vich_uploader.upload_handler'] = new VichUploaderBundleHandlerUploadHandler_0000000008e807e100000000458618d7697f1e12dea6cf9b47165d6564d6b936(
                 function (&$wrappedInstance, \ProxyManager\Proxy\LazyLoadingInterface $proxy) {
                     $wrappedInstance = $this->getVichUploader_UploadHandlerService(false);
 
@@ -3462,6 +3308,19 @@ class appDevDebugProjectContainer extends Container
     protected function getVm_CreateProductService()
     {
         return $this->services['vm.create_product'] = new \AppBundle\ViewModel\CreateProduct($this->get('templating'));
+    }
+
+    /**
+     * Gets the 'vm.product_list' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \AppBundle\ViewModel\ProductList A AppBundle\ViewModel\ProductList instance.
+     */
+    protected function getVm_ProductListService()
+    {
+        return $this->services['vm.product_list'] = new \AppBundle\ViewModel\ProductList($this->get('templating'));
     }
 
     /**
@@ -3514,23 +3373,6 @@ class appDevDebugProjectContainer extends Container
     protected function getWebProfiler_DebugToolbarService()
     {
         return $this->services['web_profiler.debug_toolbar'] = new \Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener($this->get('twig'), false, 2, 'bottom', $this->get('router', ContainerInterface::NULL_ON_INVALID_REFERENCE), '^/(app(_[\\w]+)?\\.php/)?_wdt');
-    }
-
-    /**
-     * Gets the 'assetic.asset_factory' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * This service is private.
-     * If you want to be able to request this service from the container directly,
-     * make it public, otherwise you might end up with broken code.
-     *
-     * @return \Symfony\Bundle\AsseticBundle\Factory\AssetFactory A Symfony\Bundle\AsseticBundle\Factory\AssetFactory instance.
-     */
-    protected function getAssetic_AssetFactoryService()
-    {
-        return $this->services['assetic.asset_factory'] = new \Symfony\Bundle\AsseticBundle\Factory\AssetFactory($this->get('kernel'), $this, $this->getParameterBag(), ($this->targetDirs[3].'/app/../web'), true);
     }
 
     /**
@@ -3621,7 +3463,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('56d5337f1c55d2.06618080')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('56d5ce99c97b25.90536810')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -3852,15 +3694,13 @@ class appDevDebugProjectContainer extends Container
                 'SwiftmailerBundle' => 'Symfony\\Bundle\\SwiftmailerBundle\\SwiftmailerBundle',
                 'DoctrineBundle' => 'Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle',
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
-                'AsseticBundle' => 'Symfony\\Bundle\\AsseticBundle\\AsseticBundle',
                 'VichUploaderBundle' => 'Vich\\UploaderBundle\\VichUploaderBundle',
-                'FPNTagBundle' => 'FPN\\TagBundle\\FPNTagBundle',
-                'FogsTaggingBundle' => 'Fogs\\TaggingBundle\\FogsTaggingBundle',
                 'AppBundle' => 'AppBundle\\AppBundle',
                 'DebugBundle' => 'Symfony\\Bundle\\DebugBundle\\DebugBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
                 'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',
+                'DoctrineFixturesBundle' => 'Doctrine\\Bundle\\FixturesBundle\\DoctrineFixturesBundle',
             ),
             'kernel.charset' => 'UTF-8',
             'kernel.container_class' => 'appDevDebugProjectContainer',
@@ -3936,7 +3776,7 @@ class appDevDebugProjectContainer extends Container
             'twig.form.resources' => array(
                 0 => 'form_div_layout.html.twig',
                 1 => 'VichUploaderBundle:Form:fields.html.twig',
-                2 => 'FogsTaggingBundle:Form:widgets.html.twig',
+                2 => 'form/widgets.html.twig',
             ),
             'monolog.logger.class' => 'Symfony\\Bridge\\Monolog\\Logger',
             'monolog.gelf.publisher.class' => 'Gelf\\MessagePublisher',
@@ -4153,63 +3993,6 @@ class appDevDebugProjectContainer extends Container
             'sensio_framework_extra.converter.doctrine.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\Request\\ParamConverter\\DoctrineParamConverter',
             'sensio_framework_extra.converter.datetime.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\Request\\ParamConverter\\DateTimeParamConverter',
             'sensio_framework_extra.view.listener.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\TemplateListener',
-            'assetic.asset_factory.class' => 'Symfony\\Bundle\\AsseticBundle\\Factory\\AssetFactory',
-            'assetic.asset_manager.class' => 'Assetic\\Factory\\LazyAssetManager',
-            'assetic.asset_manager_cache_warmer.class' => 'Symfony\\Bundle\\AsseticBundle\\CacheWarmer\\AssetManagerCacheWarmer',
-            'assetic.cached_formula_loader.class' => 'Assetic\\Factory\\Loader\\CachedFormulaLoader',
-            'assetic.config_cache.class' => 'Assetic\\Cache\\ConfigCache',
-            'assetic.config_loader.class' => 'Symfony\\Bundle\\AsseticBundle\\Factory\\Loader\\ConfigurationLoader',
-            'assetic.config_resource.class' => 'Symfony\\Bundle\\AsseticBundle\\Factory\\Resource\\ConfigurationResource',
-            'assetic.coalescing_directory_resource.class' => 'Symfony\\Bundle\\AsseticBundle\\Factory\\Resource\\CoalescingDirectoryResource',
-            'assetic.directory_resource.class' => 'Symfony\\Bundle\\AsseticBundle\\Factory\\Resource\\DirectoryResource',
-            'assetic.filter_manager.class' => 'Symfony\\Bundle\\AsseticBundle\\FilterManager',
-            'assetic.worker.ensure_filter.class' => 'Assetic\\Factory\\Worker\\EnsureFilterWorker',
-            'assetic.worker.cache_busting.class' => 'Assetic\\Factory\\Worker\\CacheBustingWorker',
-            'assetic.value_supplier.class' => 'Symfony\\Bundle\\AsseticBundle\\DefaultValueSupplier',
-            'assetic.node.paths' => array(
-
-            ),
-            'assetic.cache_dir' => (__DIR__.'/assetic'),
-            'assetic.bundles' => array(
-                0 => 'FrameworkBundle',
-                1 => 'SecurityBundle',
-                2 => 'TwigBundle',
-                3 => 'MonologBundle',
-                4 => 'SwiftmailerBundle',
-                5 => 'DoctrineBundle',
-                6 => 'SensioFrameworkExtraBundle',
-                7 => 'AsseticBundle',
-                8 => 'VichUploaderBundle',
-                9 => 'FPNTagBundle',
-                10 => 'FogsTaggingBundle',
-                11 => 'AppBundle',
-                12 => 'DebugBundle',
-                13 => 'WebProfilerBundle',
-                14 => 'SensioDistributionBundle',
-                15 => 'SensioGeneratorBundle',
-            ),
-            'assetic.twig_extension.class' => 'Symfony\\Bundle\\AsseticBundle\\Twig\\AsseticExtension',
-            'assetic.twig_formula_loader.class' => 'Assetic\\Extension\\Twig\\TwigFormulaLoader',
-            'assetic.helper.dynamic.class' => 'Symfony\\Bundle\\AsseticBundle\\Templating\\DynamicAsseticHelper',
-            'assetic.helper.static.class' => 'Symfony\\Bundle\\AsseticBundle\\Templating\\StaticAsseticHelper',
-            'assetic.php_formula_loader.class' => 'Symfony\\Bundle\\AsseticBundle\\Factory\\Loader\\AsseticHelperFormulaLoader',
-            'assetic.debug' => true,
-            'assetic.use_controller' => false,
-            'assetic.enable_profiler' => false,
-            'assetic.read_from' => ($this->targetDirs[3].'/app/../web'),
-            'assetic.write_to' => ($this->targetDirs[3].'/app/../web'),
-            'assetic.variables' => array(
-
-            ),
-            'assetic.java.bin' => '/usr/bin/java',
-            'assetic.node.bin' => '/usr/local/bin/node',
-            'assetic.ruby.bin' => '/usr/local/bin/ruby',
-            'assetic.sass.bin' => '/usr/local/bin/sass',
-            'assetic.reactjsx.bin' => '/usr/bin/jsx',
-            'assetic.filter.cssrewrite.class' => 'Assetic\\Filter\\CssRewriteFilter',
-            'assetic.twig_extension.functions' => array(
-
-            ),
             'vich_uploader.default_filename_attribute_suffix' => '_name',
             'vich_uploader.mappings' => array(
                 'product_image' => array(
@@ -4229,10 +4012,6 @@ class appDevDebugProjectContainer extends Container
                 ),
             ),
             'vich_uploader.file_injector.class' => 'Vich\\UploaderBundle\\Injector\\FileInjector',
-            'fpn_tag.tag_manager.class' => 'Fogs\\TaggingBundle\\Service\\TagManager',
-            'fpn_tag.entity.tag.class' => 'Fogs\\TaggingBundle\\Entity\\Tag',
-            'fpn_tag.entity.tagging.class' => 'Fogs\\TaggingBundle\\Entity\\Tagging',
-            'fpn_tag.slugifier.class' => 'FPN\\TagBundle\\Util\\Slugifier',
             'web_profiler.debug_toolbar.position' => 'bottom',
             'web_profiler.debug_toolbar.intercept_redirects' => false,
             'web_profiler.debug_toolbar.mode' => 2,
@@ -4305,23 +4084,23 @@ class appDevDebugProjectContainer extends Container
     }
 }
 
-class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec697f1e12dea6cf9b47165d6564d6b936 extends \Vich\UploaderBundle\Handler\DownloadHandler implements \ProxyManager\Proxy\VirtualProxyInterface
+class VichUploaderBundleHandlerDownloadHandler_0000000008e807e200000000458618d7697f1e12dea6cf9b47165d6564d6b936 extends \Vich\UploaderBundle\Handler\DownloadHandler implements \ProxyManager\Proxy\VirtualProxyInterface
 {
 
     /**
      * @var \Closure|null initializer responsible for generating the wrapped object
      */
-    private $valueHolder56d5337f4b6b0375765707 = null;
+    private $valueHolder56d5ce9a0711c252237071 = null;
 
     /**
      * @var \Closure|null initializer responsible for generating the wrapped object
      */
-    private $initializer56d5337f4b6b8247694393 = null;
+    private $initializer56d5ce9a07125419637484 = null;
 
     /**
      * @var bool[] map of public properties of the parent class
      */
-    private static $publicProperties56d5337f4b69b274131189 = array(
+    private static $publicProperties56d5ce9a07105234919305 = array(
         
     );
 
@@ -4330,9 +4109,9 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function downloadObject($object, $field, $className = null, $fileName = null)
     {
-        $this->initializer56d5337f4b6b8247694393 && $this->initializer56d5337f4b6b8247694393->__invoke($this->valueHolder56d5337f4b6b0375765707, $this, 'downloadObject', array('object' => $object, 'field' => $field, 'className' => $className, 'fileName' => $fileName), $this->initializer56d5337f4b6b8247694393);
+        $this->initializer56d5ce9a07125419637484 && $this->initializer56d5ce9a07125419637484->__invoke($this->valueHolder56d5ce9a0711c252237071, $this, 'downloadObject', array('object' => $object, 'field' => $field, 'className' => $className, 'fileName' => $fileName), $this->initializer56d5ce9a07125419637484);
 
-        return $this->valueHolder56d5337f4b6b0375765707->downloadObject($object, $field, $className, $fileName);
+        return $this->valueHolder56d5ce9a0711c252237071->downloadObject($object, $field, $className, $fileName);
     }
 
     /**
@@ -4342,7 +4121,7 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function __construct($initializer)
     {
-        $this->initializer56d5337f4b6b8247694393 = $initializer;
+        $this->initializer56d5ce9a07125419637484 = $initializer;
     }
 
     /**
@@ -4350,16 +4129,16 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function & __get($name)
     {
-        $this->initializer56d5337f4b6b8247694393 && $this->initializer56d5337f4b6b8247694393->__invoke($this->valueHolder56d5337f4b6b0375765707, $this, '__get', array('name' => $name), $this->initializer56d5337f4b6b8247694393);
+        $this->initializer56d5ce9a07125419637484 && $this->initializer56d5ce9a07125419637484->__invoke($this->valueHolder56d5ce9a0711c252237071, $this, '__get', array('name' => $name), $this->initializer56d5ce9a07125419637484);
 
-        if (isset(self::$publicProperties56d5337f4b69b274131189[$name])) {
-            return $this->valueHolder56d5337f4b6b0375765707->$name;
+        if (isset(self::$publicProperties56d5ce9a07105234919305[$name])) {
+            return $this->valueHolder56d5ce9a0711c252237071->$name;
         }
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder56d5337f4b6b0375765707;
+            $targetObject = $this->valueHolder56d5ce9a0711c252237071;
 
             $backtrace = debug_backtrace(false);
             trigger_error('Undefined property: ' . get_parent_class($this) . '::$' . $name . ' in ' . $backtrace[0]['file'] . ' on line ' . $backtrace[0]['line'], \E_USER_NOTICE);
@@ -4367,7 +4146,7 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
             return;
         }
 
-        $targetObject = $this->valueHolder56d5337f4b6b0375765707;
+        $targetObject = $this->valueHolder56d5ce9a0711c252237071;
         $accessor = function & () use ($targetObject, $name) {
             return $targetObject->$name;
         };
@@ -4385,18 +4164,18 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function __set($name, $value)
     {
-        $this->initializer56d5337f4b6b8247694393 && $this->initializer56d5337f4b6b8247694393->__invoke($this->valueHolder56d5337f4b6b0375765707, $this, '__set', array('name' => $name, 'value' => $value), $this->initializer56d5337f4b6b8247694393);
+        $this->initializer56d5ce9a07125419637484 && $this->initializer56d5ce9a07125419637484->__invoke($this->valueHolder56d5ce9a0711c252237071, $this, '__set', array('name' => $name, 'value' => $value), $this->initializer56d5ce9a07125419637484);
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder56d5337f4b6b0375765707;
+            $targetObject = $this->valueHolder56d5ce9a0711c252237071;
 
             return $targetObject->$name = $value;;
             return;
         }
 
-        $targetObject = $this->valueHolder56d5337f4b6b0375765707;
+        $targetObject = $this->valueHolder56d5ce9a0711c252237071;
         $accessor = function & () use ($targetObject, $name, $value) {
             return $targetObject->$name = $value;
         };
@@ -4413,18 +4192,18 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function __isset($name)
     {
-        $this->initializer56d5337f4b6b8247694393 && $this->initializer56d5337f4b6b8247694393->__invoke($this->valueHolder56d5337f4b6b0375765707, $this, '__isset', array('name' => $name), $this->initializer56d5337f4b6b8247694393);
+        $this->initializer56d5ce9a07125419637484 && $this->initializer56d5ce9a07125419637484->__invoke($this->valueHolder56d5ce9a0711c252237071, $this, '__isset', array('name' => $name), $this->initializer56d5ce9a07125419637484);
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder56d5337f4b6b0375765707;
+            $targetObject = $this->valueHolder56d5ce9a0711c252237071;
 
             return isset($targetObject->$name);;
             return;
         }
 
-        $targetObject = $this->valueHolder56d5337f4b6b0375765707;
+        $targetObject = $this->valueHolder56d5ce9a0711c252237071;
         $accessor = function () use ($targetObject, $name) {
             return isset($targetObject->$name);
         };
@@ -4441,18 +4220,18 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function __unset($name)
     {
-        $this->initializer56d5337f4b6b8247694393 && $this->initializer56d5337f4b6b8247694393->__invoke($this->valueHolder56d5337f4b6b0375765707, $this, '__unset', array('name' => $name), $this->initializer56d5337f4b6b8247694393);
+        $this->initializer56d5ce9a07125419637484 && $this->initializer56d5ce9a07125419637484->__invoke($this->valueHolder56d5ce9a0711c252237071, $this, '__unset', array('name' => $name), $this->initializer56d5ce9a07125419637484);
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder56d5337f4b6b0375765707;
+            $targetObject = $this->valueHolder56d5ce9a0711c252237071;
 
             unset($targetObject->$name);;
             return;
         }
 
-        $targetObject = $this->valueHolder56d5337f4b6b0375765707;
+        $targetObject = $this->valueHolder56d5ce9a0711c252237071;
         $accessor = function () use ($targetObject, $name) {
             unset($targetObject->$name);
         };
@@ -4466,16 +4245,16 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
 
     public function __clone()
     {
-        $this->initializer56d5337f4b6b8247694393 && $this->initializer56d5337f4b6b8247694393->__invoke($this->valueHolder56d5337f4b6b0375765707, $this, '__clone', array(), $this->initializer56d5337f4b6b8247694393);
+        $this->initializer56d5ce9a07125419637484 && $this->initializer56d5ce9a07125419637484->__invoke($this->valueHolder56d5ce9a0711c252237071, $this, '__clone', array(), $this->initializer56d5ce9a07125419637484);
 
-        $this->valueHolder56d5337f4b6b0375765707 = clone $this->valueHolder56d5337f4b6b0375765707;
+        $this->valueHolder56d5ce9a0711c252237071 = clone $this->valueHolder56d5ce9a0711c252237071;
     }
 
     public function __sleep()
     {
-        $this->initializer56d5337f4b6b8247694393 && $this->initializer56d5337f4b6b8247694393->__invoke($this->valueHolder56d5337f4b6b0375765707, $this, '__sleep', array(), $this->initializer56d5337f4b6b8247694393);
+        $this->initializer56d5ce9a07125419637484 && $this->initializer56d5ce9a07125419637484->__invoke($this->valueHolder56d5ce9a0711c252237071, $this, '__sleep', array(), $this->initializer56d5ce9a07125419637484);
 
-        return array('valueHolder56d5337f4b6b0375765707');
+        return array('valueHolder56d5ce9a0711c252237071');
     }
 
     public function __wakeup()
@@ -4487,7 +4266,7 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function setProxyInitializer(\Closure $initializer = null)
     {
-        $this->initializer56d5337f4b6b8247694393 = $initializer;
+        $this->initializer56d5ce9a07125419637484 = $initializer;
     }
 
     /**
@@ -4495,7 +4274,7 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function getProxyInitializer()
     {
-        return $this->initializer56d5337f4b6b8247694393;
+        return $this->initializer56d5ce9a07125419637484;
     }
 
     /**
@@ -4503,7 +4282,7 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function initializeProxy()
     {
-        return $this->initializer56d5337f4b6b8247694393 && $this->initializer56d5337f4b6b8247694393->__invoke($this->valueHolder56d5337f4b6b0375765707, $this, 'initializeProxy', array(), $this->initializer56d5337f4b6b8247694393);
+        return $this->initializer56d5ce9a07125419637484 && $this->initializer56d5ce9a07125419637484->__invoke($this->valueHolder56d5ce9a0711c252237071, $this, 'initializeProxy', array(), $this->initializer56d5ce9a07125419637484);
     }
 
     /**
@@ -4511,7 +4290,7 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function isProxyInitialized()
     {
-        return null !== $this->valueHolder56d5337f4b6b0375765707;
+        return null !== $this->valueHolder56d5ce9a0711c252237071;
     }
 
     /**
@@ -4519,29 +4298,29 @@ class VichUploaderBundleHandlerDownloadHandler_000000005760568500000000033c0dec6
      */
     public function getWrappedValueHolderValue()
     {
-        return $this->valueHolder56d5337f4b6b0375765707;
+        return $this->valueHolder56d5ce9a0711c252237071;
     }
 
 
 }
 
-class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697f1e12dea6cf9b47165d6564d6b936 extends \Vich\UploaderBundle\Handler\UploadHandler implements \ProxyManager\Proxy\VirtualProxyInterface
+class VichUploaderBundleHandlerUploadHandler_0000000008e807e100000000458618d7697f1e12dea6cf9b47165d6564d6b936 extends \Vich\UploaderBundle\Handler\UploadHandler implements \ProxyManager\Proxy\VirtualProxyInterface
 {
 
     /**
      * @var \Closure|null initializer responsible for generating the wrapped object
      */
-    private $valueHolder56d5337f4bc1b264577944 = null;
+    private $valueHolder56d5ce9a0779c160978189 = null;
 
     /**
      * @var \Closure|null initializer responsible for generating the wrapped object
      */
-    private $initializer56d5337f4bc22441807873 = null;
+    private $initializer56d5ce9a077a4018754582 = null;
 
     /**
      * @var bool[] map of public properties of the parent class
      */
-    private static $publicProperties56d5337f4bc0a891768694 = array(
+    private static $publicProperties56d5ce9a0778a692439152 = array(
         
     );
 
@@ -4550,9 +4329,9 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function upload($obj, $fieldName)
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, 'upload', array('obj' => $obj, 'fieldName' => $fieldName), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, 'upload', array('obj' => $obj, 'fieldName' => $fieldName), $this->initializer56d5ce9a077a4018754582);
 
-        return $this->valueHolder56d5337f4bc1b264577944->upload($obj, $fieldName);
+        return $this->valueHolder56d5ce9a0779c160978189->upload($obj, $fieldName);
     }
 
     /**
@@ -4560,9 +4339,9 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function inject($obj, $fieldName)
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, 'inject', array('obj' => $obj, 'fieldName' => $fieldName), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, 'inject', array('obj' => $obj, 'fieldName' => $fieldName), $this->initializer56d5ce9a077a4018754582);
 
-        return $this->valueHolder56d5337f4bc1b264577944->inject($obj, $fieldName);
+        return $this->valueHolder56d5ce9a0779c160978189->inject($obj, $fieldName);
     }
 
     /**
@@ -4570,9 +4349,9 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function clean($obj, $fieldName)
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, 'clean', array('obj' => $obj, 'fieldName' => $fieldName), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, 'clean', array('obj' => $obj, 'fieldName' => $fieldName), $this->initializer56d5ce9a077a4018754582);
 
-        return $this->valueHolder56d5337f4bc1b264577944->clean($obj, $fieldName);
+        return $this->valueHolder56d5ce9a0779c160978189->clean($obj, $fieldName);
     }
 
     /**
@@ -4580,9 +4359,9 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function remove($obj, $fieldName)
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, 'remove', array('obj' => $obj, 'fieldName' => $fieldName), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, 'remove', array('obj' => $obj, 'fieldName' => $fieldName), $this->initializer56d5ce9a077a4018754582);
 
-        return $this->valueHolder56d5337f4bc1b264577944->remove($obj, $fieldName);
+        return $this->valueHolder56d5ce9a0779c160978189->remove($obj, $fieldName);
     }
 
     /**
@@ -4592,7 +4371,7 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function __construct($initializer)
     {
-        $this->initializer56d5337f4bc22441807873 = $initializer;
+        $this->initializer56d5ce9a077a4018754582 = $initializer;
     }
 
     /**
@@ -4600,16 +4379,16 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function & __get($name)
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, '__get', array('name' => $name), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, '__get', array('name' => $name), $this->initializer56d5ce9a077a4018754582);
 
-        if (isset(self::$publicProperties56d5337f4bc0a891768694[$name])) {
-            return $this->valueHolder56d5337f4bc1b264577944->$name;
+        if (isset(self::$publicProperties56d5ce9a0778a692439152[$name])) {
+            return $this->valueHolder56d5ce9a0779c160978189->$name;
         }
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder56d5337f4bc1b264577944;
+            $targetObject = $this->valueHolder56d5ce9a0779c160978189;
 
             $backtrace = debug_backtrace(false);
             trigger_error('Undefined property: ' . get_parent_class($this) . '::$' . $name . ' in ' . $backtrace[0]['file'] . ' on line ' . $backtrace[0]['line'], \E_USER_NOTICE);
@@ -4617,7 +4396,7 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
             return;
         }
 
-        $targetObject = $this->valueHolder56d5337f4bc1b264577944;
+        $targetObject = $this->valueHolder56d5ce9a0779c160978189;
         $accessor = function & () use ($targetObject, $name) {
             return $targetObject->$name;
         };
@@ -4635,18 +4414,18 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function __set($name, $value)
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, '__set', array('name' => $name, 'value' => $value), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, '__set', array('name' => $name, 'value' => $value), $this->initializer56d5ce9a077a4018754582);
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder56d5337f4bc1b264577944;
+            $targetObject = $this->valueHolder56d5ce9a0779c160978189;
 
             return $targetObject->$name = $value;;
             return;
         }
 
-        $targetObject = $this->valueHolder56d5337f4bc1b264577944;
+        $targetObject = $this->valueHolder56d5ce9a0779c160978189;
         $accessor = function & () use ($targetObject, $name, $value) {
             return $targetObject->$name = $value;
         };
@@ -4663,18 +4442,18 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function __isset($name)
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, '__isset', array('name' => $name), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, '__isset', array('name' => $name), $this->initializer56d5ce9a077a4018754582);
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder56d5337f4bc1b264577944;
+            $targetObject = $this->valueHolder56d5ce9a0779c160978189;
 
             return isset($targetObject->$name);;
             return;
         }
 
-        $targetObject = $this->valueHolder56d5337f4bc1b264577944;
+        $targetObject = $this->valueHolder56d5ce9a0779c160978189;
         $accessor = function () use ($targetObject, $name) {
             return isset($targetObject->$name);
         };
@@ -4691,18 +4470,18 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function __unset($name)
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, '__unset', array('name' => $name), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, '__unset', array('name' => $name), $this->initializer56d5ce9a077a4018754582);
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder56d5337f4bc1b264577944;
+            $targetObject = $this->valueHolder56d5ce9a0779c160978189;
 
             unset($targetObject->$name);;
             return;
         }
 
-        $targetObject = $this->valueHolder56d5337f4bc1b264577944;
+        $targetObject = $this->valueHolder56d5ce9a0779c160978189;
         $accessor = function () use ($targetObject, $name) {
             unset($targetObject->$name);
         };
@@ -4716,16 +4495,16 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
 
     public function __clone()
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, '__clone', array(), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, '__clone', array(), $this->initializer56d5ce9a077a4018754582);
 
-        $this->valueHolder56d5337f4bc1b264577944 = clone $this->valueHolder56d5337f4bc1b264577944;
+        $this->valueHolder56d5ce9a0779c160978189 = clone $this->valueHolder56d5ce9a0779c160978189;
     }
 
     public function __sleep()
     {
-        $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, '__sleep', array(), $this->initializer56d5337f4bc22441807873);
+        $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, '__sleep', array(), $this->initializer56d5ce9a077a4018754582);
 
-        return array('valueHolder56d5337f4bc1b264577944');
+        return array('valueHolder56d5ce9a0779c160978189');
     }
 
     public function __wakeup()
@@ -4737,7 +4516,7 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function setProxyInitializer(\Closure $initializer = null)
     {
-        $this->initializer56d5337f4bc22441807873 = $initializer;
+        $this->initializer56d5ce9a077a4018754582 = $initializer;
     }
 
     /**
@@ -4745,7 +4524,7 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function getProxyInitializer()
     {
-        return $this->initializer56d5337f4bc22441807873;
+        return $this->initializer56d5ce9a077a4018754582;
     }
 
     /**
@@ -4753,7 +4532,7 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function initializeProxy()
     {
-        return $this->initializer56d5337f4bc22441807873 && $this->initializer56d5337f4bc22441807873->__invoke($this->valueHolder56d5337f4bc1b264577944, $this, 'initializeProxy', array(), $this->initializer56d5337f4bc22441807873);
+        return $this->initializer56d5ce9a077a4018754582 && $this->initializer56d5ce9a077a4018754582->__invoke($this->valueHolder56d5ce9a0779c160978189, $this, 'initializeProxy', array(), $this->initializer56d5ce9a077a4018754582);
     }
 
     /**
@@ -4761,7 +4540,7 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function isProxyInitialized()
     {
-        return null !== $this->valueHolder56d5337f4bc1b264577944;
+        return null !== $this->valueHolder56d5ce9a0779c160978189;
     }
 
     /**
@@ -4769,7 +4548,7 @@ class VichUploaderBundleHandlerUploadHandler_000000005760568600000000033c0dec697
      */
     public function getWrappedValueHolderValue()
     {
-        return $this->valueHolder56d5337f4bc1b264577944;
+        return $this->valueHolder56d5ce9a0779c160978189;
     }
 
 

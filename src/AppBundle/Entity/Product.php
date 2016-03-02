@@ -2,19 +2,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
-use Fogs\TaggingBundle\Interfaces\Taggable;
-use Fogs\TaggingBundle\Traits\TaggableTrait;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ORM\Entity
  * @ORM\Table(name="products")
  * @Vich\Uploadable
  */
-class Product implements Taggable {
-    use TaggableTrait;
-
+class Product {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -34,7 +31,7 @@ class Product implements Taggable {
      */
     private $desc = '';
 
-    /**
+   /**
      * @ORM\Column(type="string", length=255)
      */
     private $image_name = '';
@@ -45,9 +42,26 @@ class Product implements Taggable {
     private $image_file;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Tag")
+     * @ORM\JoinTable(name="product_tags",
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     * )
+     **/
+    private $tags;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -181,5 +195,39 @@ class Product implements Taggable {
     {
         $this->setCreatedAt(new \DateTime);
         return $this;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param Tag $tag
+     *
+     * @return Product
+     */
+    public function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

@@ -2,11 +2,12 @@ imports:
     - { resource: config_dev.yml }
 
 parameters:
-    product_image_destination: /tmp/prontopro
+    product_image_destination: '%kernel.root_dir%/../tests/data/uploads'
+    product_image_source: '%kernel.root_dir%/../tests/data'
 
 doctrine:
     dbal:
-        path: '%kernel.root_dir%/../tests/data.db3'
+        path: '%kernel.root_dir%/../tests/data/database.db3'
 
 framework:
     test: ~

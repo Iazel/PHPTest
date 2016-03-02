@@ -12,7 +12,11 @@ services:
         class: AppBundle\ViewModel\CreateProduct
         arguments: ['@templating']
 
+    vm.product_list:
+        class: AppBundle\ViewModel\ProductList
+        arguments: ['@templating']
+
     app.form.type.tags:
         class: AppBundle\Form\Type\TagsType
-        arguments: [ "@fpn_tag.tag_manager" ]
+        arguments: [ "@doctrine.orm.entity_manager" ]
         tags: [{ name: form.type }]

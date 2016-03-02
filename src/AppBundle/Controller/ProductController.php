@@ -38,10 +38,18 @@ class ProductController extends Controller
      */
     public function listAction()
     {
+        $products = $this->getRepo()->findAllMostRecent();
+        return $this->get('vm.product_list')->render($products);
     }
 
     private function t($str)
     {
         return $this->get('translator')->trans($str);
+    }
+
+    private function getRepo()
+    {
+        $this->getDoctrine()->getManager()->getRepository('AppBundle:Product');
+        return $this;
     }
 }

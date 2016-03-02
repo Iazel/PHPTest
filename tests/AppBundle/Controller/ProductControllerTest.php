@@ -1,22 +1,18 @@
 <?php
 namespace AppBundle\Controller;
 
-use Doctrine\ORM\Tools\SchemaTool;
+use AppBundle\TestHelper\DbTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductControllerTest extends WebTestCase
 {
+    use DbTrait;
+
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
-        static::bootKernel();
-        $em = static::$kernel->getContainer()->get('doctrine')->getManager();
-
-        $schemaTool = new SchemaTool($em);
-        $metadata = $em->getMetadataFactory()->getAllMetadata();
-        $schemaTool->dropSchema($metadata);
-        $schemaTool->createSchema($metadata);
+        static::setupDatabase();
     }
 
     public function testCreateAction_OkFlow()
@@ -50,12 +46,12 @@ class ProductControllerTest extends WebTestCase
     public function testCreateAction_ImageUpload()
     {
         $client = static::createClient();
-        // hide the do logic, so that we can focus on tests
         $dest = $this->doImageUpload($client, 'image.jpg');
 
         $this->assertTrue( $client->getResponse()->isRedirect() );
         $uploads = glob("$dest/*");
-        $this->assertCount(1, $uploads);
+        $this->assertCount(1, $uploads,
+            'It should upload the image');
         $this->assertStringEndsWith('.jpg', $uploads[0]);
         $this->assertNotSame('image.jpg', basename($uploads[0]));
     }
@@ -64,7 +60,9 @@ class ProductControllerTest extends WebTestCase
     {
         $cont = $client->getContainer();
         $dest = $cont->getParameter('product_image_destination');
-        $image = $cont->getParameter('kernel.root_dir') .'/../tests/data/' . $file;
+        $image = $cont->getParameter('product_image_source')
+            . DIRECTORY_SEPARATOR . $file
+            ;
         $this->ensureCleanDir($dest);
 
         $form = $this->getValidCreateForm($client);
@@ -87,13 +85,6 @@ class ProductControllerTest extends WebTestCase
             'product[name]' => 'Test',
             'product[tags]' => 'a,b,c',
         ));
-    }
-
-    private function ensureCleanDB()
-    {
-        $purger = new ORMPurger($this->getContainer()->get('doctrine')->getManager());
-        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
-        $purger->purge();
     }
 
     private function ensureCleanDir($dir)
