@@ -2,7 +2,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
-use AppBundle\Finder\ProductFinder;
 use AppBundle\Form\Type\ProductType;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +38,7 @@ class ProductController extends Controller
      */
     public function listAction(Request $request)
     {
-        $finder = $this->createFinder();
+        $finder = $this->get('finder.product');
         $finder->mostRecent();
 
         $q = $request->query->get('q', '');
@@ -54,11 +53,5 @@ class ProductController extends Controller
     private function t($str)
     {
         return $this->get('translator')->trans($str);
-    }
-
-    private function createFinder()
-    {
-        $qb = $this->getDoctrine()->getManager()->createQueryBuilder();
-        return new ProductFinder($qb);
     }
 }

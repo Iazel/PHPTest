@@ -8,6 +8,18 @@ services:
         class: AppBundle\Service\ProductPersister
         arguments: ['@doctrine']
 
+    finder:
+        abstract: true
+        arguments: ['@doctrine.orm.entity_manager']
+
+    finder.product:
+        class: AppBundle\Finder\ProductFinder
+        parent: finder
+
+    finder.tag:
+        class: AppBundle\Finder\TagFinder
+        parent: finder
+
     vm.create_product:
         class: AppBundle\ViewModel\CreateProduct
         arguments: ['@templating']

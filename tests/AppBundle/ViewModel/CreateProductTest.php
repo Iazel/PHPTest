@@ -7,6 +7,9 @@ use AppBundle\TestHelper\ServiceTestCase;
 
 class CreateProductTest extends ServiceTestCase
 {
+    /**
+     * @group fast
+     */
     public function testRender()
     {
         $resp = $this->subj()->render( $this->getForm() );

@@ -3,13 +3,13 @@ namespace AppBundle\Finder;
 
 use AppBundle\Entity\Product;
 
-
 class ProductFinder extends Base
 {
+    const COUNT_FIELD = 'p.id';
+
     protected function initQB()
     {
         $this->qb->from(Product::class, 'p')->select('p');
-        return $this;
     }
 
     public function mostRecent()

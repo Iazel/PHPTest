@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class ProductListTest extends ServiceTestCase
 {
+    /**
+     * @group fast
+     */
     public function testRender()
     {
         $products = $this->getProducts(10);
@@ -45,8 +48,7 @@ class ProductListTest extends ServiceTestCase
             'It should set the right term');
 
         $nf = $crawler->filter('td.nothing-found');
-        $this->assertCount(1,
-            $nf,
+        $this->assertCount(1, $nf,
             'It should render a message when there\'s no products');
 
         $span = $crawler->filter('.products-list thead > th')->count();

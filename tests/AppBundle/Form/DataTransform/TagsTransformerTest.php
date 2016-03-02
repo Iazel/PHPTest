@@ -4,7 +4,7 @@ namespace AppBundle\Form\DataTransform;
 use AppBundle\Entity\Tag;
 use AppBundle\TestHelper\DbTrait;
 use AppBundle\TestHelper\ServiceTestCase;
-use AppBundle\DataFixtures\ORM\LoadTagsTransformData;
+use AppBundle\DataFixtures\ORM\LoadTagsData;
 
 class TagsTransformerTest extends ServiceTestCase
 {
@@ -16,10 +16,13 @@ class TagsTransformerTest extends ServiceTestCase
         static::setupDatabase();
     }
 
+    /**
+     * @group DB
+     */
     public function testReverseTransform()
     {
         $this->ensureCleanDB();
-        $this->populateDatabaseWith(new LoadTagsTransformData);
+        $this->populateDatabaseWith(new LoadTagsData);
 
         $t = $this->subj();
         $tags = $t->reverseTransform('test1,test2,test3');

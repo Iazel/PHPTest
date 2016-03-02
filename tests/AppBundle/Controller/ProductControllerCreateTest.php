@@ -2,12 +2,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\TestHelper\DbTrait;
+use AppBundle\TestHelper\ContainerTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductControllerCreateTest extends WebTestCase
 {
     use DbTrait;
+    use ContainerTrait;
 
     public static function setUpBeforeClass()
     {
@@ -15,8 +17,12 @@ class ProductControllerCreateTest extends WebTestCase
         static::setupDatabase();
     }
 
+    /**
+     * @group DB
+     */
     public function testOkFlow()
     {
+        $this->ensureCleanDB();
         $client = static::createClient();
         $crawler = $client->request('GET', '/product/create');
 
@@ -30,8 +36,20 @@ class ProductControllerCreateTest extends WebTestCase
             $client->getResponse()->isRedirect('/product/list'),
             'It should redirect to products list'
         );
+
+        $c = $client->getContainer();
+        $this->assertSame(1,
+            $c->get('finder.product')->count(),
+            'It should persist the product created');
+
+        $this->assertSame(3,
+            $c->get('finder.tag')->count(),
+            'It should persist the tag inserted');
     }
 
+    /**
+     * @group fast
+     */
     public function testInvalidFlow()
     {
         $client = static::createClient();
@@ -43,6 +61,9 @@ class ProductControllerCreateTest extends WebTestCase
         );
     }
 
+    /**
+     * @group fast
+     */
     public function testImageUpload()
     {
         $client = static::createClient();

@@ -5,7 +5,7 @@ use AppBundle\Entity\Tag;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 
-class LoadTagsTransformData implements FixtureInterface
+class LoadTagsData implements FixtureInterface
 {
     private $em;
 
