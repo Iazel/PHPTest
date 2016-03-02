@@ -21,7 +21,8 @@ class TagsTransformer implements DataTransformerInterface
         if($tags === null || count($tags) === 0)
             return '';
 
-        return join(',', array_map(function($t){ return $t->getName(); }, $tags));
+        return join(',', array_map(function($t){ return $t->getName(); },
+            $tags->toArray()));
     }
 
     public function reverseTransform($tags)

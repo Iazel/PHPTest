@@ -21,6 +21,11 @@ abstract class Base
         return $this->qb->getQuery()->getResult();
     }
 
+    public function getSingleResult()
+    {
+        return $this->qb->getQuery()->getSingleResult();
+    }
+
     public function count()
     {
         return $this->doCount(static::COUNT_FIELD);

@@ -9,7 +9,10 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+      <div class="container">
+        <h1 class="page-title">{% block page_title %}{% endblock %}</h1>
         {% block body %}{% endblock %}
+      </div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -2,30 +2,20 @@
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block title %}{{ 'page_title.create_product'|trans }}{% endblock %}
+{% block page_title %}{{ 'page_title.create_product'|trans }}{% endblock %}
 
 {% block body %}
-<div class="container">
-  <h1 class="page-title">{{ 'page_title.create_product'|trans }}</h1>
-  {{ form(form) }}
-{#
   {{ form_start(form) }}
-  <div class="form-group">
-    {{ form_label(form.name) }}
-    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-    {{ form_errors(form.name) }}
-  </div>
-  <div class="form-group">
-    {{ form_label(form.desc) }}
-    {{ form_widget(form.desc, {'attr': {'class': 'form-control'}}) }}
-    {{ form_errors(form.desc) }}
-  </div>
+    {{ form_row(form.name) }}
+    {{ form_row(form.image_file) }}
+    {{ form_row(form.desc) }}
+    {{ form_row(form.tags) }}
+    {% block extpoint %}{% endblock %}
 
-  <div class="form-actions push-right">
-    {{ form_row(form.save, {attr: {class: 'btn btn-primary'}}) }}
-  </div>
+    <div class="form-actions">
+      {{ form_row(form.save, {attr: {class: 'btn-primary'}}) }}
+    </div>
   {{ form_end(form) }}
-#}
-</div>
 {% endblock %}
 
 {% block stylesheets %}

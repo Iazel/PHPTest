@@ -1,0 +1,11 @@
+{% extends 'products/create.html.twig' %}
+
+{% block title %}{{ 'page_title.edit_product'|trans }}{% endblock %}
+{% block page_title %}{{ 'page_title.edit_product'|trans }}{% endblock %}
+
+{% block extpoint %}
+<div class="form-group">
+  <label class="control-label">{{ 'product.created_at'|trans }}</label>
+  <p class="form-control-static created-at">{{ created_at|date }}</p>
+</div>
+{% endblock %}

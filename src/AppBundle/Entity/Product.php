@@ -74,6 +74,15 @@ class Product {
     }
 
     /**
+     * USE ONLY FOR TEST PORPUSE
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * Set name
      *
      * @param string $name
@@ -154,7 +163,7 @@ class Product {
      */
     public function setImageName($fname)
     {
-        $this->image_name = $fname;
+        $this->image_name = (string) $fname;
 
         return $this;
     }

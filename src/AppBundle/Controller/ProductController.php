@@ -16,6 +16,28 @@ class ProductController extends Controller
     public function createAction(Request $request)
     {
         $product = new Product;
+
+        return $this->manageProduct($request, $product, function($vm, $form){
+            return $vm->renderCreate($form);
+        });
+    }
+
+    /**
+    * @Route("/product/{pid}/edit", name="product_edit", requirements={
+    *   "pid": "^\d+$"
+    * })
+     */
+    public function editAction(Request $request, $pid)
+    {
+        $p = $this->get('finder.product')->find($pid);
+
+        return $this->manageProduct($request, $p, function($vm, $form) use($p){
+            return $vm->renderEdit($form, $p->getCreatedAt());
+        });
+    }
+
+    private function manageProduct($request, $product, $render)
+    {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -30,7 +52,7 @@ class ProductController extends Controller
             }
         }
 
-        return $this->get('vm.create_product')->render($form);
+        return $render($this->get('vm.manage_product'), $form);
     }
 
     /**

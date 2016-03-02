@@ -20,13 +20,17 @@ services:
         class: AppBundle\Finder\TagFinder
         parent: finder
 
-    vm.create_product:
-        class: AppBundle\ViewModel\CreateProduct
+    vm:
+        abstract: true
         arguments: ['@templating']
+
+    vm.manage_product:
+        class: AppBundle\ViewModel\ManageProduct
+        parent: vm
 
     vm.product_list:
         class: AppBundle\ViewModel\ProductList
-        arguments: ['@templating']
+        parent: vm
 
     app.form.type.tags:
         class: AppBundle\Form\Type\TagsType

@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class TagController extends Controller
 {
     /**
-     * @Route("/tags/search/{tag}", name="tags_search", defaults={"tag"=""})
+     * @Route("/tags/search/{tag}", name="tags_search", defaults={"tag": ""})
      */
     public function searchAction($tag)
     {

@@ -34,6 +34,18 @@ class ProductListTest extends ServiceTestCase
             trim($first->filter('.product-created-at')->text()),
             'It should render the created date');
 
+        $link = $first->filter('.product-edit-link');
+        $this->assertCount(1, $link,
+            'It should render a link');
+
+        $this->assertCount(2,
+            $link->filter('.product-name, .product-image'),
+            'The link should wrap name and image');
+
+        $this->assertStringEndsWith('/product/1/edit',
+            $link->attr('href'),
+            'The link should point to the edit page');
+
         $this->assertCount(1,
             $crawler->filter('form.search'),
             'It should render a form search');
@@ -68,7 +80,8 @@ class ProductListTest extends ServiceTestCase
         $prods = array();
         for($i = 0; $i < $n; ++$i) {
             $p = new Product;
-            $p->setName('Prod' . $i)
+            $p->setID($i+1)
+                ->setName('Prod' . $i)
                 ->setImageName('image.jpg')
                 ->setCreatedAt(new \DateTime('2015-01-01'))
                 ;

@@ -1,38 +1,37 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}{{ 'page_title.product_list'|trans }}{% endblock %}
+{% block page_title %}{{ 'page_title.product_list'|trans }}{% endblock %}
 
 {% block body %}
-<div class="container">
-  <h1 class="page-title">{{ 'page_title.product_list'|trans }}</h1>
+<form class="search pull-right" method="get">
+  <input class="search-control" type="text" name="q" value="{{ current_search_term }}" placeholder="tag1, tag2, ...">
+  <button class="btn btn-default">{{ 'search'|trans }}</button>
+</form>
 
-  <form class="search pull-right" method="get">
-    <input class="search-control" type="text" name="q" value="{{ current_search_term }}" placeholder="tag1, tag2, ...">
-    <button class="btn btn-default">{{ 'search'|trans }}</button>
-  </form>
-
-  <table class="table table-striped products-list">
-    <thead>
-      <th>{{ 'product.name'|trans }}</th>
-      <th>{{ 'product.created_at'|trans }}</th>
-    </thead>
-    <tbody>
-      {% for p in products %}
-      <tr class="product">
-        <td>
+<table class="table table-striped products-list">
+  <thead>
+    <th>{{ 'product.name'|trans }}</th>
+    <th>{{ 'product.created_at'|trans }}</th>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr class="product">
+      <td>
+        <a class="product-edit-link" href="{{ path('product_edit', {'pid': p.id}) }}" title="{{ 'tile.edit_product'|trans }}">
           <img class="product-image" src="{{ thumb_image(p, 'image_file') }}">
           <span class="product-name">{{ p.name }}</span>
-        </td>
-        <td class="product-created-at">
-          {{ p.createdAt|date }}
-        </td>
-      </tr>
-      {% else %}
-      <td colspan="2" class="nothing-found">
-        {{ 'products.nothing-found'|trans }}
+        </a>
       </td>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+      <td class="product-created-at">
+        {{ p.createdAt|date }}
+      </td>
+    </tr>
+    {% else %}
+    <td colspan="2" class="nothing-found">
+      {{ 'products.nothing-found'|trans }}
+    </td>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

@@ -12,6 +12,13 @@ class ProductFinder extends Base
         $this->qb->from(Product::class, 'p')->select('p');
     }
 
+    public function find($id)
+    {
+        $id = (int) $id;
+        $this->qb->where("p.id = $id");
+        return $this->getSingleResult();
+    }
+
     public function mostRecent()
     {
         $this->qb->orderBy('p.created_at', 'DESC');
