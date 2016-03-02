@@ -20,3 +20,8 @@ services:
         class: AppBundle\Form\Type\TagsType
         arguments: [ "@doctrine.orm.entity_manager" ]
         tags: [{ name: form.type }]
+    
+    app.twig.thumb_image_ext:
+        class: AppBundle\Twig\Extension\ThumbImageExtension
+        arguments: ['@vich_uploader.templating.helper.uploader_helper']
+        tags: [{ name: twig.extension }]

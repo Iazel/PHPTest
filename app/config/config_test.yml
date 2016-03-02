@@ -16,6 +16,10 @@ framework:
     profiler:
         collect: false
 
+twig:
+    date:
+        format: Y-m-d, H:i:s
+
 web_profiler:
     toolbar: false
     intercept_redirects: false

@@ -133,7 +133,7 @@ class Product {
         if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->image_name = mt_rand();
+            $this->image_name .= 'x';
         }
 
         return $this;
