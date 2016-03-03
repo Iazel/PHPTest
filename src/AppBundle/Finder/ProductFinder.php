@@ -29,7 +29,7 @@ class ProductFinder extends Base
     {
         $qb = $this->qb;
         $or = $qb->expr()->orX();
-        $qb->join('p.tags', 't')->where($or)->groupBy('p.id');
+        $qb->join('p.tags', 't')->where($or)->distinct();
 
         foreach($tags as $i => $tag) {
             $or->add( $qb->expr()->like('t.name', ":tagname$i") );

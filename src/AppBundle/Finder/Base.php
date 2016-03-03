@@ -23,7 +23,7 @@ abstract class Base
 
     public function getOneOrNullResult()
     {
-        return $this->qb->getQuery()->getOneOrNullResult();
+        return $this->qb->getQuery()->setMaxResults(1)->getOneOrNullResult();
     }
 
     public function count()

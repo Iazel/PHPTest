@@ -9,7 +9,7 @@
 
   - `ViewModel`s are another component that I like because give a better separation between controller and representation, and are also easier to unit testing and composite.
   
-  - The usefulness of `Finder`s and `ViewModel`s in this little project is scarse, but I decided to include this patterns as a demonstration.
+  - The usefulness of `Finder`s and `ViewModel`s in this little project is scarce, but I decided to include this patterns as a demonstration.
 
 # Installation
 The project is based on Symfony3, you can install it in the usual way...
