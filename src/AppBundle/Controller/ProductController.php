@@ -3,7 +3,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
 use AppBundle\Form\Type\ProductType;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,7 +29,9 @@ class ProductController extends Controller
      */
     public function editAction(Request $request, $pid)
     {
-        $p = $this->get('finder.product')->find($pid);
+        $p = $this->get('finder.product')->findOrNull($pid);
+        if($p === null)
+            throw $this->createNotFoundException();
 
         return $this->manageProduct($request, $p, 'updated', function($vm, $form) use($p){
             return $vm->renderEdit($form, $p->getCreatedAt());

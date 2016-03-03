@@ -40,7 +40,7 @@ class ProductControllerEditTest extends WebTestCase
         $this->assertTrue( $client->getResponse()->isRedirect('/product/list'),
             'It should redirect to the product list');
 
-        $prod = $this->getContainer()->get('finder.product')->find(1);
+        $prod = $this->getContainer()->get('finder.product')->findOrNull(1);
         $this->assertSame('Edited', $prod->getName(),
             'It should have persisted the changes');
     }
@@ -66,6 +66,18 @@ class ProductControllerEditTest extends WebTestCase
         $this->assertNotSame($old_thumb, $new_thumb,
             'The thumbnail should be different');
 
+    }
+
+    public function testNotFound()
+    {
+        $client = static::createClient();
+        $this->ensureCleanDB();
+
+        $client->request('GET', '/product/100/edit');
+        $this->assertTrue($client->getResponse()->isNotFound(),
+            'It should issue a 404 Page not Found');
+        
+        return $this;
     }
 
     private function prepareForImageEdit()

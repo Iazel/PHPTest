@@ -12,11 +12,11 @@ class ProductFinder extends Base
         $this->qb->from(Product::class, 'p')->select('p');
     }
 
-    public function find($id)
+    public function findOrNull($id)
     {
         $id = (int) $id;
         $this->qb->where("p.id = $id");
-        return $this->getSingleResult();
+        return $this->getOneOrNullResult();
     }
 
     public function mostRecent()

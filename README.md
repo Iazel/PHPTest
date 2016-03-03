@@ -7,9 +7,9 @@
 
   - The spec specified that I should use repository and so I've done (in TagController), however I prefer to use `Finder`s, a light abstraction built around the `QueryBuilder`.
 
-  - `ViewModel`s are another component that I like because give a better separation between controller and representation, and are also easier to unit testing and composition.
+  - `ViewModel`s are another component that I like because give a better separation between controller and representation, and are also easier to unit testing and composite.
   
-  - The usefulness of `Finder`s and `ViewModel`s in this little project is scarse, but I decided to include this patterns for a demonstration purpose.
+  - The usefulness of `Finder`s and `ViewModel`s in this little project is scarse, but I decided to include this patterns as a demonstration.
 
 # Installation
 The project is based on Symfony3, you can install it in the usual way...

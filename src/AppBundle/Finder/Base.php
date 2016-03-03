@@ -21,9 +21,9 @@ abstract class Base
         return $this->qb->getQuery()->getResult();
     }
 
-    public function getSingleResult()
+    public function getOneOrNullResult()
     {
-        return $this->qb->getQuery()->getSingleResult();
+        return $this->qb->getQuery()->getOneOrNullResult();
     }
 
     public function count()
