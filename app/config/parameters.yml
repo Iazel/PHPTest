@@ -9,4 +9,9 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: e6942b2b1750a5704d4ae00963f275aadca6a96a
-    product_image_destination: '%kernel.root_dir%/../web/images/p'
+    product_image_path: '%kernel.root_dir%/../web/images/p'
+    product_image_source: '%kernel.root_dir%/../tests/data'
+    product_thumb_width: 100
+    product_thumb_height: 100
+    product_thumb_uri: '/images/p/thumbs'
+    product_thumb_path: '%product_image_path%/thumbs'

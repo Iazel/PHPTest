@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="1db2f1e03099ba7b2582c82ae1e79ad9" resname="page_title.create_product">
+        <source>page_title.create_product</source>
+        <target>Product Creation</target>
+      </trans-unit>
+      <trans-unit id="992b27eb3eac265c871b77b7a69916fa" resname="page_title.edit_product">
+        <source>page_title.edit_product</source>
+        <target>Product Edit</target>
+      </trans-unit>
+      <trans-unit id="9128c88312a9b8da09a3f6c92abb350c" resname="product.created_at">
+        <source>product.created_at</source>
+        <target>Created At</target>
+      </trans-unit>
+      <trans-unit id="4bc10d8db841c76222aa6485d6ab7286" resname="page_title.product_list">
+        <source>page_title.product_list</source>
+        <target>Products List</target>
+      </trans-unit>
+      <trans-unit id="58a5feeb50a909ad4eb292ef508ca3ce" resname="product.new">
+        <source>product.new</source>
+        <target>New</target>
+      </trans-unit>
+      <trans-unit id="06a943c59f33a34bb5924aaf72cd2995" resname="search">
+        <source>search</source>
+        <target>Search</target>
+      </trans-unit>
+      <trans-unit id="4e78609951b9e1345ccc10fd1371f61b" resname="product.name">
+        <source>product.name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="34ba5d53ac9b8ca47a918d619d24ba4d" resname="tile.edit_product">
+        <source>tile.edit_product</source>
+        <target>Edit Product</target>
+      </trans-unit>
+      <trans-unit id="33b253c7a58070d38481adbd51ec72fe" resname="products.nothing-found">
+        <source>products.nothing-found</source>
+        <target>There's no product :(</target>
+      </trans-unit>
+      <trans-unit id="manual1" resname="products.created_successfully">
+        <source>products.created_successfully</source>
+        <target>The product has been successfully created!</target>
+      </trans-unit>
+      <trans-unit id="manual2" resname="products.updated_successfully">
+        <source>products.updated_successfully</source>
+        <target>The product has been successfully updated!</target>
+      </trans-unit>
+      <trans-unit id="manual3" resname="products.error">
+        <source>products.error</source>
+        <target>Some strange error occurred, wait some time and then retry ^^"</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

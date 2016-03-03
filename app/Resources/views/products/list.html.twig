@@ -4,10 +4,15 @@
 {% block page_title %}{{ 'page_title.product_list'|trans }}{% endblock %}
 
 {% block body %}
-<form class="search pull-right" method="get">
-  <input class="search-control" type="text" name="q" value="{{ current_search_term }}" placeholder="tag1, tag2, ...">
-  <button class="btn btn-default">{{ 'search'|trans }}</button>
-</form>
+<div class="clearfix">
+  <div class="pull-left">
+    <a class="btn btn-primary" href="{{ path('product_create') }}">{{ 'product.new'|trans }}</a>
+  </div>
+  <form class="search pull-right" method="get">
+    <input class="search-control" type="text" name="q" value="{{ current_search_term }}" placeholder="tag1, tag2, ...">
+    <button class="btn btn-default">{{ 'search'|trans }}</button>
+  </form>
+</div>
 
 <table class="table table-striped products-list">
   <thead>
@@ -19,7 +24,7 @@
     <tr class="product">
       <td>
         <a class="product-edit-link" href="{{ path('product_edit', {'pid': p.id}) }}" title="{{ 'tile.edit_product'|trans }}">
-          <img class="product-image" src="{{ thumb_image(p, 'image_file') }}">
+          <img class="product-image" src="{{ thumb_image(p.imageName) }}">
           <span class="product-name">{{ p.name }}</span>
         </a>
       </td>

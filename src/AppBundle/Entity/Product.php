@@ -26,7 +26,6 @@ class Product {
     private $name;
 
     /**
-     * @var string
      * @ORM\Column(type="text")
      */
     private $desc = '';
@@ -54,6 +53,11 @@ class Product {
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated_at;
 
     /**
      * Constructor
@@ -142,7 +146,7 @@ class Product {
         if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->image_name .= 'x';
+            $this->setUpdatedNow();
         }
 
         return $this;
@@ -203,6 +207,36 @@ class Product {
     public function setCreatedNow()
     {
         $this->setCreatedAt(new \DateTime);
+        return $this;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Product
+     */
+    public function setUpdatedAt(\DateTime $updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedNow()
+    {
+        $this->setUpdatedAt(new \DateTime);
         return $this;
     }
 

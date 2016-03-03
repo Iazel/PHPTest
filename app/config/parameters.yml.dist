@@ -15,7 +15,13 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    product_image_destination: "%kernel.root_dir%/../web/images/p"
+    # Needed for fixtures
+    product_image_source: '%kernel.root_dir%/../tests/data'
+    product_image_path: "%kernel.root_dir%/../web/images/p"
+    product_thumb_width: 100
+    product_thumb_height: 100
+    product_thumb_uri: '/images/p/thumbs'
+    product_thumb_path: '%product_image_path%/thumbs'
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

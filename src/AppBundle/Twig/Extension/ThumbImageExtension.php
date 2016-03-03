@@ -5,11 +5,11 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class ThumbImageExtension extends \Twig_Extension
 {
-    private $helper;
+    private $thumbs_uri;
 
-    public function __construct(UploaderHelper $helper)
+    public function __construct($thumbs_uri)
     {
-        $this->helper = $helper;
+        $this->thumb_uri = $thumbs_uri . '/';
     }
 
     public function getName()
@@ -24,9 +24,8 @@ class ThumbImageExtension extends \Twig_Extension
         );
     }
 
-    public function asset($obj, $fieldName, $className = null)
+    public function asset($image)
     {
-        $url = $this->helper->asset($obj, $fieldName, $className);
-        return dirname($url) .'/thumbs/'. basename($url);
+        return $this->thumb_uri . ($image ?: 'noimage.jpg');
     }
 }

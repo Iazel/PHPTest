@@ -4,10 +4,6 @@ parameters:
 #    parameter_name: value
 
 services:
-    product_persister:
-        class: AppBundle\Service\ProductPersister
-        arguments: ['@doctrine']
-
     finder:
         abstract: true
         arguments: ['@doctrine.orm.entity_manager']
@@ -39,5 +35,12 @@ services:
     
     app.twig.thumb_image_ext:
         class: AppBundle\Twig\Extension\ThumbImageExtension
-        arguments: ['@vich_uploader.templating.helper.uploader_helper']
+        arguments: ['%product_thumb_uri%']
         tags: [{ name: twig.extension }]
+
+    app.listener.product_image_upload:
+        class: AppBundle\EventListener\ProductImageUploadListener
+        arguments: ['%product_thumb_path%', '%product_thumb_width%','%product_thumb_height%']
+        tags:
+            - { name: kernel.event_listener, event: vich_uploader.post_upload, method: onPostUpload }
+            - { name: kernel.event_listener, event: vich_uploader.pre_remove, method: onRemoveUpload }

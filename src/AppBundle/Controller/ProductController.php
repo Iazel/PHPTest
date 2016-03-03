@@ -15,9 +15,10 @@ class ProductController extends Controller
      */
     public function createAction(Request $request)
     {
-        $product = new Product;
+        $p = new Product;
+        $p->setCreatedNow();
 
-        return $this->manageProduct($request, $product, function($vm, $form){
+        return $this->manageProduct($request, $p, 'created', function($vm, $form){
             return $vm->renderCreate($form);
         });
     }
@@ -31,24 +32,24 @@ class ProductController extends Controller
     {
         $p = $this->get('finder.product')->find($pid);
 
-        return $this->manageProduct($request, $p, function($vm, $form) use($p){
+        return $this->manageProduct($request, $p, 'updated', function($vm, $form) use($p){
             return $vm->renderEdit($form, $p->getCreatedAt());
         });
     }
 
-    private function manageProduct($request, $product, $render)
+    private function manageProduct($request, $product, $msg, $render)
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if( $form->isValid() ) {
             try {
-                $this->get('product_persister')->persist($product, $form);
-                $this->addFlash('success', $this->t('products.created_successfully'));
+                $this->persist($product);
+                $this->addFlash('success', $this->trans("products.{$msg}_successfully"));
                 return $this->redirectToRoute('product_list');
             }
             catch(Exception $ex) {
-                $this->addFlash('error', $this->t('products.error'));
+                $this->addFlash('danger', $this->trans('products.error'));
             }
         }
 
@@ -72,7 +73,16 @@ class ProductController extends Controller
         return $this->get('vm.product_list')->render($finder->getResult(), $q);
     }
 
-    private function t($str)
+    private function persist($p)
+    {
+        $p->setUpdatedNow();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($p);
+        $em->flush();
+    }
+
+    private function trans($str)
     {
         return $this->get('translator')->trans($str);
     }

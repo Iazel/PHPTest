@@ -2,8 +2,8 @@ imports:
     - { resource: config_dev.yml }
 
 parameters:
-    product_image_destination: '%kernel.root_dir%/../tests/data/uploads'
     product_image_source: '%kernel.root_dir%/../tests/data'
+    product_image_path: '%kernel.root_dir%/../tests/data/uploads'
 
 doctrine:
     dbal:

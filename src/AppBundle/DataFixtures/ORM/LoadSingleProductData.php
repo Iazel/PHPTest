@@ -1,21 +1,10 @@
 <?php
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Tag;
-use AppBundle\Entity\Product;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\FixtureInterface;
-
-class LoadSingleProductData implements FixtureInterface
+class LoadSingleProductData extends Base
 {
-    private $em;
-
-    public function load(ObjectManager $manager)
-    {
-        $this->em = $manager;
-        $this->genData();
-        $manager->flush();
-    }
+    use CoreTagTrait;
+    use CoreProductTrait;
 
     protected function genData()
     {
@@ -24,21 +13,12 @@ class LoadSingleProductData implements FixtureInterface
 
     protected function new_prod($name, $date, $tags)
     {
-        $p = new Product;
-        $p->setName($name)->setCreatedAt( new \DateTime($date) );
+        $p = $this->core_prod($name, $date);
 
         foreach($tags as $tag)
-            $p->addTag( $this->new_tag($tag) );
+            $p->addTag( $this->core_tag($tag) );
 
         $this->em->persist($p);
         return $this;
-    }
-
-    private function new_tag($name)
-    {
-        $t = new Tag($name);
-        $this->em->persist($t);
-
-        return $t;
     }
 }

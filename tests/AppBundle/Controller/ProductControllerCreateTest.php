@@ -1,15 +1,13 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\TestHelper\DbTrait;
-use AppBundle\TestHelper\ContainerTrait;
+use AppBundle\TestHelper\ProductTestHelperTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductControllerCreateTest extends WebTestCase
 {
-    use DbTrait;
-    use ContainerTrait;
+    use ProductTestHelperTrait;
 
     public static function setUpBeforeClass()
     {
@@ -70,35 +68,27 @@ class ProductControllerCreateTest extends WebTestCase
         $dest = $this->doImageUpload($client, 'image.jpg');
 
         $this->assertTrue( $client->getResponse()->isRedirect() );
-        $uploads = glob("$dest/*");
+
+        $uploads = glob("$dest/*.jpg");
         $this->assertCount(1, $uploads,
             'It should upload the image');
-        $this->assertStringEndsWith('.jpg', $uploads[0]);
+        $this->assertCount(1, glob("$dest/thumbs/*.jpg"),
+            'It should generate the thumbanil');
+
         $this->assertNotSame('image.jpg', basename($uploads[0]));
     }
 
     private function doImageUpload($client, $file)
     {
         $cont = $client->getContainer();
-        $dest = $cont->getParameter('product_image_destination');
-        $image = $cont->getParameter('product_image_source')
-            . DIRECTORY_SEPARATOR . $file
-            ;
+        $dest = $this->getImageDestination();
+        $image = $this->getTestImage($file);
         $this->ensureCleanDir($dest);
 
         $form = $this->getValidCreateForm($client);
-        $form['product[image_file]']['file']->upload($image);
-        $client->submit($form);
+        $this->uploadAndSubmit($client, $form, $image);
 
         return $dest;
-    }
-
-    private function getCreateForm($client, $data = array())
-    {
-        return $client
-            ->request('GET', '/product/create')
-            ->selectButton('product[save]')
-            ->form($data);
     }
 
     private function getValidCreateForm($client)
@@ -109,9 +99,8 @@ class ProductControllerCreateTest extends WebTestCase
         ));
     }
 
-    private function ensureCleanDir($dir)
+    private function getCreateForm($client, $data = array())
     {
-        foreach(glob($dir . '/*') as $file)
-            unlink($file);
+        return $this->getForm($client, '/product/create', $data);
     }
 }

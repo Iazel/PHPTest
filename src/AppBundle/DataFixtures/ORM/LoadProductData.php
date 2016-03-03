@@ -1,24 +1,24 @@
 <?php
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Product;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class LoadProductData implements FixtureInterface, ContainerAwareInterface
+class LoadProductData extends Base implements ContainerAwareInterface
 {
+    use CoreTagTrait;
+    use CoreProductTrait;
     use ContainerAwareTrait;
 
-    public function load(ObjectManager $manager)
-    {
-        $this->em = $manager;
-        $this->tag_manager = $this->container->get('fpn_tag.tag_manager');
-        $image = $this->container->getParameter('product_image_source')
-            . DIRECTORY_SEPARATOR . 'image.jpg';
+    protected $image_dest, $thumb_dest;
 
+    public function __construct() {
+    }
+
+    protected function genData()
+    {
+        $image = $this->getTestImage();
         $this
             ->new_prod('Test1', $image, '2015-01-10 23:59', array())
             ->new_prod('Test2', $image, '2015-01-04', array('tag1', 'tag2'))
@@ -27,29 +27,30 @@ class LoadProductData implements FixtureInterface, ContainerAwareInterface
             ->new_prod('Test5', $image, '2015-01-02', array('tag2'))
             ->new_prod('Test6', $image, '2015-01-01 00:14', array('tag3'))
             ;
-
-        $manager->flush();
     }
 
     protected function new_prod($name, $image, $created_at, $tags)
     {
-        foreach($tags as &$t)
-            $t = $this->new_tag($t);
+        $tmp_image = '/tmp/test_' . md5($image) ."_$name";
+        copy($image, $tmp_image);
 
-        $p = new Product();
-        $p->setName($name)
+        $file = new UploadedFile($tmp_image, 'image.jpg', 'image/jpeg', null, null, true);
+        $p = $this->core_prod($name, $created_at, null, false)
             ->setDesc('Lorem ipsum dolor sit amet')
-            ->setImageFile(new File($image, false))
-            ->setCreatedAt(new \DateTime($created_at))
-            ->setTags($tags)
+            ->setImageFile($file)
             ;
 
-        $this->em->persist($p);
+        $this->persist($p); // we need to persist it here to trigger the upload!
+
+        foreach($tags as $t)
+            $p->addTag( $this->core_tag($t) );
+
         return $this;
     }
 
-    protected function new_tag($name)
+    public function getTestImage()
     {
-        return $this->tag_manager->loadOrCreateTag($name);
+        return $this->container->getParameter('product_image_source')
+            . DIRECTORY_SEPARATOR . 'image.jpg';
     }
 }

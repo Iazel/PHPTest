@@ -4,10 +4,29 @@
   padding: 0.4em 0.5em;
 }
 
+.products-list {
+  margin-top: 1.5em;
+}
+
 .nothing-found {
   text-align: center;
   font-size: 1.3em;
 }
+.product-edit-link {
+  width: 100%;
+  display: block;
+}
+.product-edit-link:hover {
+  text-decoration: none;
+}
+
+.vich-image a {
+  display: block;
+}
+.vich-image img {
+  max-width: 100%;
+}
+
 .twitter-typeahead {
   width: 100%;
 }
