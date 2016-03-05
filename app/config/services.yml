@@ -28,6 +28,10 @@ services:
         class: AppBundle\ViewModel\ProductList
         parent: vm
 
+    crud.product:
+        class: AppBundle\CRUD\ProductCRUD
+        arguments: ['@doctrine.orm.entity_manager', '@vm.manage_product', '@form.factory', '@translator', '@router', '@session']
+
     app.form.type.tags:
         class: AppBundle\Form\Type\TagsType
         arguments: [ "@doctrine.orm.entity_manager" ]

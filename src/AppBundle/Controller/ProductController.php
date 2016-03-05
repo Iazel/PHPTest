@@ -16,10 +16,7 @@ class ProductController extends Controller
     {
         $p = new Product;
         $p->setCreatedNow();
-
-        return $this->manageProduct($request, $p, 'created', function($vm, $form){
-            return $vm->renderCreate($form);
-        });
+        return $this->get('crud.product')->create($request, $p);
     }
 
     /**
@@ -33,28 +30,7 @@ class ProductController extends Controller
         if($p === null)
             throw $this->createNotFoundException();
 
-        return $this->manageProduct($request, $p, 'updated', function($vm, $form) use($p){
-            return $vm->renderEdit($form, $p->getCreatedAt());
-        });
-    }
-
-    private function manageProduct($request, $product, $msg, $render)
-    {
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if( $form->isValid() ) {
-            try {
-                $this->persist($product);
-                $this->addFlash('success', $this->trans("products.{$msg}_successfully"));
-                return $this->redirectToRoute('product_list');
-            }
-            catch(Exception $ex) {
-                $this->addFlash('danger', $this->trans('products.error'));
-            }
-        }
-
-        return $render($this->get('vm.manage_product'), $form);
+        return $this->get('crud.product')->update($request, $p);
     }
 
     /**
@@ -72,19 +48,5 @@ class ProductController extends Controller
         }
 
         return $this->get('vm.product_list')->render($finder->getResult(), $q);
-    }
-
-    private function persist($p)
-    {
-        $p->setUpdatedNow();
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($p);
-        $em->flush();
-    }
-
-    private function trans($str)
-    {
-        return $this->get('translator')->trans($str);
     }
 }
